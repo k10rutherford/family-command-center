@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rutherford Family Command Center</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app">
+    <section class="slide active" id="month-slide" aria-label="Monthly calendar">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Rutherford Family Command Center</p>
+          <h1 id="month-title">Month</h1>
+        </div>
+        <div class="clock" id="clock"></div>
+      </header>
+      <div class="month-grid" id="month-grid"></div>
+    </section>
+
+    <section class="slide" id="week-slide" aria-label="Weekly calendar">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Rutherford Family Command Center</p>
+          <h1>This Week</h1>
+        </div>
+        <div class="clock clock-copy"></div>
+      </header>
+      <div class="week-grid" id="week-grid"></div>
+    </section>
+
+    <section class="slide" id="today-slide" aria-label="Today's schedule">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Rutherford Family Command Center</p>
+          <h1 id="today-title">Today</h1>
+        </div>
+        <div class="clock clock-copy"></div>
+      </header>
+      <div class="today-layout">
+        <div class="today-date" id="today-date"></div>
+        <div class="today-events" id="today-events"></div>
+      </div>
+    </section>
+
+    <nav class="dots" aria-label="Slide position">
+      <button class="dot active" data-slide="0" aria-label="Show month"></button>
+      <button class="dot" data-slide="1" aria-label="Show week"></button>
+      <button class="dot" data-slide="2" aria-label="Show today"></button>
+    </nav>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
