@@ -202,3 +202,118 @@ body::after{
 .widget-text{
   align-self:center;
 }
+
+
+/* --- Version 2: Microsoft Calendar connection --- */
+.settings-section{
+  margin-top:16px;
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+}
+.settings-section h3{
+  margin:0 0 12px;
+  font-family:Georgia,serif;
+  font-size:22px;
+}
+.connection-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.connection-row small{
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+}
+.connection-actions{
+  display:flex;
+  gap:8px;
+  flex-shrink:0;
+}
+.primary-button,.secondary-button{
+  padding:9px 13px;
+  border-radius:9px;
+  font-weight:700;
+  cursor:pointer;
+}
+.primary-button{
+  border:1px solid #333;
+  background:#333;
+  color:#fff;
+}
+.secondary-button{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+}
+.compact-button{
+  padding:6px 10px;
+  font-size:12px;
+}
+.calendar-selection{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+}
+.calendar-selection-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:9px;
+}
+.calendar-checkboxes{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:7px 12px;
+  margin-bottom:8px;
+}
+.calendar-checkbox{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  padding:8px 9px;
+  border:1px solid var(--line);
+  border-radius:9px;
+  font-weight:600;
+}
+.calendar-checkbox input{
+  width:18px;
+  height:18px;
+  margin:0;
+}
+.calendar-swatch{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#999;
+  flex:0 0 auto;
+}
+.calendar-message{
+  margin-top:10px;
+  min-height:18px;
+  color:var(--muted);
+  font-size:13px;
+}
+.calendar-message.error{color:#a52626}
+.calendar-message.success{color:#39751e}
+.live-data-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  margin-left:8px;
+  padding:3px 7px;
+  border-radius:999px;
+  background:#edf7e9;
+  color:#3d7624;
+  font-size:11px;
+  font-family:Arial,sans-serif;
+  vertical-align:middle;
+}
+@media(max-width:700px){
+  .connection-row{align-items:flex-start;flex-direction:column}
+  .calendar-checkboxes{grid-template-columns:1fr}
+}
