@@ -22,7 +22,17 @@ make(14,19,0,"Breakfast with Santa",1.5),
 make(30,8,0,"Countdown | Family Vacation")
 ];
 const holidayRules=[{k:["birthday"],i:"🎂",t:"birthday"},{k:["halloween"],i:"🎃"},{k:["christmas","santa"],i:"🎄"},{k:["thanksgiving"],i:"🦃"},{k:["easter"],i:"🐰"},{k:["valentine"],i:"❤️"},{k:["st patrick"],i:"☘️"},{k:["july 4","4th of july","independence day","memorial day"],i:"🇺🇸"},{k:["mother's day","mothers day"],i:"🌸"},{k:["father's day","fathers day"],i:"⚾"},{k:["graduation"],i:"🎓"},{k:["vacation","trip"],i:"✈️"}];
-const widgets=[["Birthdays","🎂",t=>t.includes("birthday")],["Volleyball","🏐",t=>t.includes("volleyball")],["Tennis","🎾",t=>t.includes("tennis")],["Karate","🥋",t=>t.includes("karate")],["Soccer","⚽",t=>t.includes("soccer")],["Swim","🏊",t=>t.includes("swim")],["Work","💼",t=>t.includes("work")],["Celebrations","🎉",t=>holiday(t)&&!t.includes("birthday")],["Countdown","⏳",t=>t.startsWith("countdown |")]];
+const widgets=[
+["Birthdays","assets/icons/birthday.svg",t=>t.includes("birthday")],
+["Volleyball","assets/icons/volleyball.svg",t=>t.includes("volleyball")],
+["Tennis","assets/icons/tennis.svg",t=>t.includes("tennis")],
+["Karate","assets/icons/karate.svg",t=>t.includes("karate")],
+["Soccer","assets/icons/soccer.svg",t=>t.includes("soccer")],
+["Swim","assets/icons/swim.svg",t=>t.includes("swim")],
+["Work","assets/icons/work.svg",t=>t.includes("work")],
+["Celebrations","assets/icons/celebration.svg",t=>holiday(t)&&!t.includes("birthday")],
+["Countdown","assets/icons/countdown.svg",t=>t.startsWith("countdown |")]
+];
 const same=(a,b)=>a.getFullYear()==b.getFullYear()&&a.getMonth()==b.getMonth()&&a.getDate()==b.getDate();
 const person=t=>{let l=t.toLowerCase();for(const[p,arr]of Object.entries(people))if(arr.some(a=>l==a||l.startsWith(a+" ")))return p;return"family"};
 const clean=t=>{if(/^countdown\s*\|/i.test(t))return t.split("|").slice(1).join("|").trim();let p=person(t);if(p=="family")return t.replace(/^family\s+/i,"");let a=people[p].find(x=>t.toLowerCase().startsWith(x));return t.slice(a.length).trim()};
@@ -31,7 +41,8 @@ const ft=d=>new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:d.getMinutes(
 const fd=d=>new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(d);
 function theme(){document.body.className="";let t=settings.autoTheme?themes[new Date().getMonth()]:settings.manualTheme;document.body.classList.add("theme-"+t);document.body.style.setProperty("--art",(!settings.autoTheme&&settings.customBg)?`url("${settings.customBg}")`:"none");document.getElementById("themeIcon").textContent=getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"")}
 function clocks(){let x=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date());["clock1","clock2","clock3"].forEach(id=>document.getElementById(id).innerHTML=x.replace(", ","<br>"))}
-function renderMonth(){let y=displayMonth.getFullYear(),m=displayMonth.getMonth(),g=document.getElementById("monthGrid");document.getElementById("monthTitle").textContent=new Intl.DateTimeFormat("en-US",{month:"long",year:"numeric"}).format(displayMonth);g.innerHTML="";["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(x=>g.innerHTML+=`<div class="weekday">${x}</div>`);let f=new Date(y,m,1),s=new Date(y,m,1-f.getDay());for(let i=0;i<42;i++){let d=new Date(s);d.setDate(s.getDate()+i);let es=events.filter(e=>same(e.start,d)&&!/^countdown\s*\|/i.test(e.title)).sort((a,b)=>a.start-b.start),icons=[];es.forEach(e=>{let h=holiday(e.title);if(h&&((h.t=="birthday"&&settings.birthdayIcons)||(h.t!="birthday"&&settings.holidayIcons))&&!icons.includes(h.i))icons.push(h.i)});let cell=document.createElement("div");cell.className="day"+(d.getMonth()!=m?" out":"")+(same(d,new Date())?" today":"");cell.innerHTML=`<div class="num">${d.getDate()}</div>${icons.length?`<div class="special">${icons.join(" ")}</div>`:""}`;es.slice(0,3).forEach(e=>cell.innerHTML+=`<div class="pill ${person(e.title)}">${clean(e.title)} · ${ft(e.start)}</div>`);g.appendChild(cell)}renderWidgets("monthWidgets")}
+function renderMonth(){let y=displayMonth.getFullYear(),m=displayMonth.getMonth(),g=document.getElementById("monthGrid");const monthName=new Intl.DateTimeFormat("en-US",{month:"long"}).format(displayMonth);
+document.getElementById("monthTitle").innerHTML=`<span class="month-name">${monthName}</span> <span class="month-year">${displayMonth.getFullYear()}</span>`;g.innerHTML="";["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(x=>g.innerHTML+=`<div class="weekday">${x}</div>`);let f=new Date(y,m,1),s=new Date(y,m,1-f.getDay());for(let i=0;i<42;i++){let d=new Date(s);d.setDate(s.getDate()+i);let es=events.filter(e=>same(e.start,d)&&!/^countdown\s*\|/i.test(e.title)).sort((a,b)=>a.start-b.start),icons=[];es.forEach(e=>{let h=holiday(e.title);if(h&&((h.t=="birthday"&&settings.birthdayIcons)||(h.t!="birthday"&&settings.holidayIcons))&&!icons.includes(h.i))icons.push(h.i)});let cell=document.createElement("div");cell.className="day"+(d.getMonth()!=m?" out":"")+(same(d,new Date())?" today":"");cell.innerHTML=`<div class="num">${d.getDate()}</div>${icons.length?`<div class="special">${icons.join(" ")}</div>`:""}`;es.slice(0,3).forEach(e=>cell.innerHTML+=`<div class="pill ${person(e.title)}">${clean(e.title)} · ${ft(e.start)}</div>`);g.appendChild(cell)}renderWidgets("monthWidgets")}
 function sow(d){let r=new Date(d);r.setHours(0,0,0,0);r.setDate(r.getDate()-r.getDay());return r}
 function renderWeek(){let s=sow(new Date()),e=new Date(s);e.setDate(s.getDate()+6);document.getElementById("weekRange").textContent=`${fd(s)} – ${fd(e)}`;let g=document.getElementById("weekGrid");g.innerHTML="";for(let i=0;i<7;i++){let d=new Date(s);d.setDate(s.getDate()+i);let c=document.createElement("div");c.className="week-col"+(same(d,new Date())?" today":"");c.innerHTML=`<div class="week-head"><span>${new Intl.DateTimeFormat("en-US",{weekday:"short"}).format(d)}</span><strong>${d.getDate()}</strong></div>`;events.filter(x=>same(x.start,d)&&!/^countdown\s*\|/i.test(x.title)).sort((a,b)=>a.start-b.start).forEach(x=>c.innerHTML+=`<div class="week-event ${person(x.title)}"><small>${ft(x.start)}</small><b>${x.title}</b></div>`);g.appendChild(c)}renderWidgets("weekWidgets")}
 function renderToday(){let d=new Date();document.getElementById("todayWeekday").textContent=new Intl.DateTimeFormat("en-US",{weekday:"long"}).format(d);document.getElementById("todayMonth").textContent=new Intl.DateTimeFormat("en-US",{month:"long"}).format(d);document.getElementById("todayNumber").textContent=d.getDate();document.getElementById("todayFull").textContent=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}).format(d);let c=document.getElementById("todayEvents"),es=events.filter(e=>same(e.start,d)&&!/^countdown\s*\|/i.test(e.title)).sort((a,b)=>a.start-b.start);c.innerHTML=es.length?"":"<div style='display:grid;place-items:center;height:100%;font:36px Georgia;color:#777'>Nothing scheduled today</div>";es.forEach(e=>c.innerHTML+=`<div class="today-event ${person(e.title)}"><div class="time">${ft(e.start)}</div><div><div class="person">${person(e.title)}</div><div class="title">${clean(e.title)}</div></div></div>`);renderWidgets("todayWidgets");renderWeather();renderCountdown()}
@@ -49,12 +60,20 @@ function renderCountdown(){
   const days=Math.ceil((new Date(item.start.getFullYear(),item.start.getMonth(),item.start.getDate())-today)/86400000);
   const title=clean(item.title);
   const h=holiday(title);
-  document.getElementById("countdownIcon").textContent=h?.i||"⏳";
+  document.getElementById("countdownIcon").innerHTML=`<img src="assets/icons/countdown.svg" alt="">`;
   document.getElementById("countdownTitle").textContent=title;
   document.getElementById("countdownDays").textContent=days===0?"Today":days===1?"1 day":`${days} days`;
   card.classList.remove("hidden");
 }
-function renderWidgets(id){let c=document.getElementById(id),u=events.filter(e=>e.start>=new Date(Y,M,D)&&e.start<=new Date(Y,M,D+31)).sort((a,b)=>a.start-b.start),arr=[];const normal=u.find(e=>!/^countdown\s*\|/i.test(e.title));arr.push(["Up Next","📅",normal?.title||"Nothing scheduled",normal?`${fd(normal.start)} · ${ft(normal.start)}`:""]);widgets.forEach(([n,i,fn])=>{let e=u.find(x=>fn(x.title.toLowerCase()));if(e){let main=n=="Countdown"?clean(e.title):e.title;let sub=n=="Countdown"?`${Math.ceil((e.start-new Date(Y,M,D))/86400000)} days`:`${fd(e.start)} · ${ft(e.start)}`;arr.push([n,n=="Celebrations"?(holiday(e.title)?.i||i):n=="Countdown"?(holiday(main)?.i||i):i,main,sub])}});c.innerHTML="";arr.slice(0,8).forEach(w=>c.innerHTML+=`<div class="widget"><div class="widget-title">${w[1]} ${w[0]}</div><div class="widget-main">${w[2]}</div><div class="widget-sub">${w[3]}</div></div>`)}
+function renderWidgets(id){let c=document.getElementById(id),u=events.filter(e=>e.start>=new Date(Y,M,D)&&e.start<=new Date(Y,M,D+31)).sort((a,b)=>a.start-b.start),arr=[];const normal=u.find(e=>!/^countdown\s*\|/i.test(e.title));arr.push(["Up Next","assets/icons/upnext.svg",normal?.title||"Nothing scheduled",normal?`${fd(normal.start)} · ${ft(normal.start)}`:""]);widgets.forEach(([n,i,fn])=>{let e=u.find(x=>fn(x.title.toLowerCase()));if(e){let main=n=="Countdown"?clean(e.title):e.title;let sub=n=="Countdown"?`${Math.ceil((e.start-new Date(Y,M,D))/86400000)} days`:`${fd(e.start)} · ${ft(e.start)}`;arr.push([n,i,main,sub])}});c.innerHTML="";arr.slice(0,8).forEach(w=>c.innerHTML+=`
+<div class="widget">
+  <div class="widget-icon-wrap"><img class="widget-icon-img" src="${w[1]}" alt=""></div>
+  <div class="widget-text">
+    <div class="widget-title">${w[0]}</div>
+    <div class="widget-main">${w[2]}</div>
+    <div class="widget-sub">${w[3]}</div>
+  </div>
+</div>`)}
 function render(){theme();clocks();renderMonth();renderWeek();renderToday()}
 const slides=[...document.querySelectorAll(".slide")],dots=[...document.querySelectorAll(".dots button")];
 function show(i){current=i;slides.forEach((s,n)=>s.classList.toggle("active",n==i));dots.forEach((d,n)=>d.classList.toggle("active",n==i))}

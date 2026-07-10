@@ -23,3 +23,182 @@ header{height:10vh;display:flex;justify-content:space-between;align-items:center
 .settings-btn{position:fixed;right:14px;bottom:12px;z-index:20;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:white;font-size:22px}.dots{position:fixed;z-index:20;left:50%;bottom:15px;transform:translateX(-50%);display:flex;gap:9px}.dots button{width:10px;height:10px;border-radius:50%;border:0;background:#c6c0b8}.dots button.active{background:var(--theme)}
 dialog{width:min(720px,92vw);border:0;border-radius:22px;padding:0;box-shadow:0 30px 80px rgba(0,0,0,.3)}dialog::backdrop{background:rgba(0,0,0,.45)}dialog form{padding:24px;background:#fbfaf8}.dialog-head{display:flex;justify-content:space-between}.dialog-head h2{font-family:Georgia,serif;font-size:34px;margin:0}.dialog-head button{border:0;background:transparent;font-size:30px}label{display:grid;gap:6px;margin-top:16px;font-weight:700}.toggle{grid-template-columns:1fr auto;align-items:center}.toggle input{width:22px;height:22px}.timings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}input,select{padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit}.actions{display:flex;justify-content:space-between;margin-top:20px}.actions button{padding:10px 16px;border-radius:10px;border:1px solid var(--line);font-weight:700}.actions button:last-child{background:#444;color:white}.version{text-align:center;color:var(--muted);font-size:12px;margin-top:18px}
 .theme-january{--bg:#edf4f8;--theme:#7ca8c8;--icon:"❄"}.theme-february{--bg:#fff0f4;--theme:#db789c;--icon:"♥"}.theme-march{--bg:#eff8ec;--theme:#69a652;--icon:"☘"}.theme-april{--bg:#fff7ec;--theme:#df9a73;--icon:"🐇"}.theme-may{--bg:#f3faef;--theme:#8cad7f;--icon:"✿"}.theme-june{--bg:#fff8dc;--theme:#dfb840;--icon:"☀"}.theme-july{--bg:#eef4fb;--theme:#5c79ad;--icon:"★"}.theme-august{--bg:#fff3df;--theme:#c26f4f;--icon:"✎"}.theme-september{--bg:#f8efe4;--theme:#aa7950;--icon:"🍂"}.theme-october{--bg:#fff0e4;--theme:#d56f2d;--icon:"🎃"}.theme-november{--bg:#f5eadb;--theme:#9b6b43;--icon:"🦃"}.theme-december{--bg:#edf5ef;--theme:#5f9272;--icon:"🎄"}.theme-default{--bg:#f7f5f1;--theme:#9d8f7e;--icon:"✦"}
+
+
+/* --- Polish pass: approved header, pink today highlight, balanced Today cards --- */
+:root{
+  --accent-pink:#ff5f97;
+  --today-pink-bg:#fff0f6;
+  --today-pink-border:#ff8fba;
+}
+
+.brand-header{
+  grid-template-columns: 1.25fr 1fr auto;
+  gap: 1.6vw;
+}
+.brand-lockup{
+  display:flex;
+  align-items:center;
+  gap:.8vw;
+}
+.brand-home{
+  color:var(--accent-pink);
+  font-size:34px;
+  line-height:1;
+  min-width:42px;
+}
+.brand-lockup h1{
+  font-size:34px;
+}
+.brand-lockup p{
+  color:var(--accent-pink);
+  letter-spacing:.18em;
+}
+.family-legend{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1.1vw;
+  font-size:14px;
+  color:#4a474d;
+  white-space:nowrap;
+}
+.family-legend span{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.legend-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  display:inline-block;
+}
+.bailey-dot{background:var(--bailey)}
+.sophia-dot{background:var(--sophia)}
+.cardin-dot{background:#a15bc5}
+.gray-dot{background:var(--gray)}
+
+.day.today{
+  background:var(--today-pink-bg);
+  box-shadow:inset 0 0 0 4px var(--today-pink-border);
+}
+.week-col.today{
+  background:var(--today-pink-bg);
+  box-shadow:inset 0 0 0 4px var(--today-pink-border);
+}
+
+#monthTitle .month-name{
+  color:var(--ink);
+}
+#monthTitle .month-year{
+  color:var(--accent-pink);
+}
+
+.today-side{
+  grid-template-rows:repeat(3, minmax(0,1fr));
+}
+.date-card,.weather-card,.countdown-card{
+  min-height:0;
+}
+.info-card{
+  padding:18px 18px;
+}
+.info-icon{
+  font-size:46px;
+}
+.info-main{
+  font-size:28px;
+}
+.info-sub{
+  font-size:15px;
+}
+.date-card>div:nth-child(2){
+  font-size:38px;
+}
+.date-card strong{
+  font-size:96px;
+}
+.date-card>div:last-child{
+  font-size:30px;
+}
+
+@media (max-width:1200px){
+  .brand-header{
+    grid-template-columns:1.15fr 1fr auto;
+  }
+  .family-legend{
+    gap:.7vw;
+    font-size:12px;
+  }
+  .brand-lockup h1{
+    font-size:30px;
+  }
+}
+
+
+/* --- Build 5: right-sized icons and reliable weather icon --- */
+body::before,
+body::after{
+  display:none;
+}
+
+.brand-home{
+  width:44px;
+  height:44px;
+  min-width:44px;
+}
+
+.widget{
+  grid-template-columns:30px minmax(0,1fr);
+  column-gap:8px;
+  padding:9px 10px;
+  align-content:center;
+}
+
+.widget-icon-wrap{
+  width:28px;
+  height:28px;
+}
+
+.widget-icon-img{
+  width:24px;
+  height:24px;
+  max-width:24px;
+  max-height:24px;
+}
+
+.widget-title{
+  font-size:12px;
+}
+
+.widget-main{
+  font-size:15px;
+  margin-top:3px;
+}
+
+.widget-sub{
+  font-size:11px;
+}
+
+.info-card .info-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+}
+
+.info-card .info-icon img,
+.weather-inline-icon{
+  width:42px;
+  height:42px;
+  display:block;
+}
+
+.widgets{
+  align-items:stretch;
+}
+
+.widget-text{
+  align-self:center;
+}

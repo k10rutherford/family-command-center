@@ -1,18 +1,12 @@
-# The Rutherfords — Family Command Center V1 Test Build 2
+# The Rutherfords — Family Command Center V1 Test Build 5
 
-This update adds:
+Changes in this build:
 
-- Weather card on the Today slide
-- Countdown card on the Today slide
-- Countdown widget that hides automatically when no `Countdown |` event exists
-- Weather and Countdown toggles in Settings
-- Weather location field in Settings
-- Father's Day baseball icon
+- Footer icons reduced to a balanced 24 px size
+- Footer icons vertically centered so they no longer clip
+- Weather icon embedded directly into the page so it always displays
+- Gray theme star removed from behind the logo
+- House-and-heart logo retained
+- All prior Version 1 features remain included
 
-The weather values are sample values in this test build. Live weather and Outlook synchronization come after layout approval.
-
-To test a countdown, keep or add an event title in `app.js` like:
-
-Countdown | Family Vacation
-
-Then set its date in the sample event list.
+Upload the full contents of this folder, including the `assets` folder.
