@@ -1,260 +1,69 @@
-const familyColors = {
-  sophia: "person-sophia",
-  grayson: "person-grayson",
-  gray: "person-grayson",
-  bailey: "person-bailey",
-  cardin: "person-cardin",
-  general: "person-general"
-};
-
-// SAMPLE EVENTS ONLY.
-// Later, we will replace this list with your live Outlook calendar.
-const sampleEvents = buildSampleEvents();
-
-function buildSampleEvents() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = now.getMonth();
-  const d = now.getDate();
-
-  const at = (dayOffset, hour, minute, title, durationHours = 1) => {
-    const start = new Date(y, m, d + dayOffset, hour, minute);
-    const end = new Date(start.getTime() + durationHours * 60 * 60 * 1000);
-    return { title, start, end };
-  };
-
-  return [
-    at(0, 16, 30, "Sophia Practice", 2),
-    at(0, 17, 0, "Bailey Work", 4.5),
-    at(0, 18, 0, "Cardin Practice", 2),
-    at(1, 10, 0, "Grayson Karate", 1),
-    at(1, 13, 0, "Take Meds", 0.25),
-    at(2, 9, 0, "Family Appointment", 1),
-    at(2, 16, 30, "Sophia Practice", 2),
-    at(3, 17, 30, "Cardin Practice", 2),
-    at(4, 15, 0, "Bailey Hair", 1.5),
-    at(5, 8, 0, "Sophia VB Camp", 5),
-    at(6, 12, 0, "Family Lunch", 1.5),
-    at(7, 17, 0, "Bailey Work", 4.5),
-    at(8, 16, 30, "Sophia Practice", 2),
-    at(9, 18, 0, "Cardin Practice", 2)
-  ];
+const people={bailey:["bailey"],sophia:["sophia","soph"],cardin:["cardin"],gray:["gray","grayson"]};
+const defaults={autoTheme:true,manualTheme:"default",customBg:"",monthSec:18,weekSec:25,todaySec:22,memoryFreq:"off",birthdayIcons:true,holidayIcons:true,showWeather:true,showCountdown:true,weatherLocation:"Smiths Station, AL"};
+let settings={...defaults,...JSON.parse(localStorage.getItem("rfc-settings")||"{}")}, displayMonth=new Date(), current=0, rotations=0, timer, hourly;
+displayMonth.setDate(1);
+const themes=["january","february","march","april","may","june","july","august","september","october","november","december"];
+const now=new Date(),Y=now.getFullYear(),M=now.getMonth(),D=now.getDate();
+const make=(o,h,m,t,d=1)=>{let s=new Date(Y,M,D+o,h,m);return{title:t,start:s,end:new Date(s.getTime()+d*3600000)}};
+const events=[
+make(0,16,30,"Sophia Volleyball Practice",2),
+make(0,17,0,"Bailey Work",4.5),
+make(0,18,0,"Cardin Volleyball Practice",2),
+make(1,10,0,"Gray Karate"),
+make(2,9,0,"Birthday Bailey"),
+make(3,16,30,"Sophia Volleyball Practice",2),
+make(4,17,30,"Cardin Volleyball Practice",2),
+make(5,15,0,"Bailey Work",4.5),
+make(7,18,0,"Halloween Party",2),
+make(9,9,30,"Gray Soccer",1.5),
+make(10,11,0,"Family Swim Meet",2),
+make(12,12,0,"Father's Day Lunch",2),
+make(14,19,0,"Breakfast with Santa",1.5),
+make(30,8,0,"Countdown | Family Vacation")
+];
+const holidayRules=[{k:["birthday"],i:"🎂",t:"birthday"},{k:["halloween"],i:"🎃"},{k:["christmas","santa"],i:"🎄"},{k:["thanksgiving"],i:"🦃"},{k:["easter"],i:"🐰"},{k:["valentine"],i:"❤️"},{k:["st patrick"],i:"☘️"},{k:["july 4","4th of july","independence day","memorial day"],i:"🇺🇸"},{k:["mother's day","mothers day"],i:"🌸"},{k:["father's day","fathers day"],i:"⚾"},{k:["graduation"],i:"🎓"},{k:["vacation","trip"],i:"✈️"}];
+const widgets=[["Birthdays","🎂",t=>t.includes("birthday")],["Volleyball","🏐",t=>t.includes("volleyball")],["Tennis","🎾",t=>t.includes("tennis")],["Karate","🥋",t=>t.includes("karate")],["Soccer","⚽",t=>t.includes("soccer")],["Swim","🏊",t=>t.includes("swim")],["Work","💼",t=>t.includes("work")],["Celebrations","🎉",t=>holiday(t)&&!t.includes("birthday")],["Countdown","⏳",t=>t.startsWith("countdown |")]];
+const same=(a,b)=>a.getFullYear()==b.getFullYear()&&a.getMonth()==b.getMonth()&&a.getDate()==b.getDate();
+const person=t=>{let l=t.toLowerCase();for(const[p,arr]of Object.entries(people))if(arr.some(a=>l==a||l.startsWith(a+" ")))return p;return"family"};
+const clean=t=>{if(/^countdown\s*\|/i.test(t))return t.split("|").slice(1).join("|").trim();let p=person(t);if(p=="family")return t.replace(/^family\s+/i,"");let a=people[p].find(x=>t.toLowerCase().startsWith(x));return t.slice(a.length).trim()};
+const holiday=t=>{let l=t.toLowerCase();return holidayRules.find(r=>r.k.some(k=>l.includes(k)))};
+const ft=d=>new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:d.getMinutes()?"2-digit":undefined}).format(d);
+const fd=d=>new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(d);
+function theme(){document.body.className="";let t=settings.autoTheme?themes[new Date().getMonth()]:settings.manualTheme;document.body.classList.add("theme-"+t);document.body.style.setProperty("--art",(!settings.autoTheme&&settings.customBg)?`url("${settings.customBg}")`:"none");document.getElementById("themeIcon").textContent=getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"")}
+function clocks(){let x=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date());["clock1","clock2","clock3"].forEach(id=>document.getElementById(id).innerHTML=x.replace(", ","<br>"))}
+function renderMonth(){let y=displayMonth.getFullYear(),m=displayMonth.getMonth(),g=document.getElementById("monthGrid");document.getElementById("monthTitle").textContent=new Intl.DateTimeFormat("en-US",{month:"long",year:"numeric"}).format(displayMonth);g.innerHTML="";["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(x=>g.innerHTML+=`<div class="weekday">${x}</div>`);let f=new Date(y,m,1),s=new Date(y,m,1-f.getDay());for(let i=0;i<42;i++){let d=new Date(s);d.setDate(s.getDate()+i);let es=events.filter(e=>same(e.start,d)&&!/^countdown\s*\|/i.test(e.title)).sort((a,b)=>a.start-b.start),icons=[];es.forEach(e=>{let h=holiday(e.title);if(h&&((h.t=="birthday"&&settings.birthdayIcons)||(h.t!="birthday"&&settings.holidayIcons))&&!icons.includes(h.i))icons.push(h.i)});let cell=document.createElement("div");cell.className="day"+(d.getMonth()!=m?" out":"")+(same(d,new Date())?" today":"");cell.innerHTML=`<div class="num">${d.getDate()}</div>${icons.length?`<div class="special">${icons.join(" ")}</div>`:""}`;es.slice(0,3).forEach(e=>cell.innerHTML+=`<div class="pill ${person(e.title)}">${clean(e.title)} · ${ft(e.start)}</div>`);g.appendChild(cell)}renderWidgets("monthWidgets")}
+function sow(d){let r=new Date(d);r.setHours(0,0,0,0);r.setDate(r.getDate()-r.getDay());return r}
+function renderWeek(){let s=sow(new Date()),e=new Date(s);e.setDate(s.getDate()+6);document.getElementById("weekRange").textContent=`${fd(s)} – ${fd(e)}`;let g=document.getElementById("weekGrid");g.innerHTML="";for(let i=0;i<7;i++){let d=new Date(s);d.setDate(s.getDate()+i);let c=document.createElement("div");c.className="week-col"+(same(d,new Date())?" today":"");c.innerHTML=`<div class="week-head"><span>${new Intl.DateTimeFormat("en-US",{weekday:"short"}).format(d)}</span><strong>${d.getDate()}</strong></div>`;events.filter(x=>same(x.start,d)&&!/^countdown\s*\|/i.test(x.title)).sort((a,b)=>a.start-b.start).forEach(x=>c.innerHTML+=`<div class="week-event ${person(x.title)}"><small>${ft(x.start)}</small><b>${x.title}</b></div>`);g.appendChild(c)}renderWidgets("weekWidgets")}
+function renderToday(){let d=new Date();document.getElementById("todayWeekday").textContent=new Intl.DateTimeFormat("en-US",{weekday:"long"}).format(d);document.getElementById("todayMonth").textContent=new Intl.DateTimeFormat("en-US",{month:"long"}).format(d);document.getElementById("todayNumber").textContent=d.getDate();document.getElementById("todayFull").textContent=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}).format(d);let c=document.getElementById("todayEvents"),es=events.filter(e=>same(e.start,d)&&!/^countdown\s*\|/i.test(e.title)).sort((a,b)=>a.start-b.start);c.innerHTML=es.length?"":"<div style='display:grid;place-items:center;height:100%;font:36px Georgia;color:#777'>Nothing scheduled today</div>";es.forEach(e=>c.innerHTML+=`<div class="today-event ${person(e.title)}"><div class="time">${ft(e.start)}</div><div><div class="person">${person(e.title)}</div><div class="title">${clean(e.title)}</div></div></div>`);renderWidgets("todayWidgets");renderWeather();renderCountdown()}
+function renderWeather(){
+  const card=document.getElementById("weatherCard");
+  card.classList.toggle("hidden",!settings.showWeather);
+  document.getElementById("weatherSub").textContent=`${settings.weatherLocation} · High 92° · Low 74° · Rain 20%`;
 }
-
-function personFromTitle(title) {
-  const firstWord = title.trim().split(/\s+/)[0].toLowerCase();
-  return familyColors[firstWord] ? firstWord : "general";
+function renderCountdown(){
+  const card=document.getElementById("countdownCard");
+  if(!settings.showCountdown){card.classList.add("hidden");return}
+  const today=new Date(Y,M,D);
+  const item=events.filter(e=>/^countdown\s*\|/i.test(e.title)&&e.start>=today).sort((a,b)=>a.start-b.start)[0];
+  if(!item){card.classList.add("hidden");return}
+  const days=Math.ceil((new Date(item.start.getFullYear(),item.start.getMonth(),item.start.getDate())-today)/86400000);
+  const title=clean(item.title);
+  const h=holiday(title);
+  document.getElementById("countdownIcon").textContent=h?.i||"⏳";
+  document.getElementById("countdownTitle").textContent=title;
+  document.getElementById("countdownDays").textContent=days===0?"Today":days===1?"1 day":`${days} days`;
+  card.classList.remove("hidden");
 }
-
-function displayTitle(title) {
-  const parts = title.trim().split(/\s+/);
-  const first = parts[0].toLowerCase();
-  if (familyColors[first]) return parts.slice(1).join(" ") || title;
-  return title;
-}
-
-function personLabel(title) {
-  const first = title.trim().split(/\s+/)[0];
-  return familyColors[first.toLowerCase()] ? first : "Family";
-}
-
-function sameDay(a, b) {
-  return a.getFullYear() === b.getFullYear() &&
-         a.getMonth() === b.getMonth() &&
-         a.getDate() === b.getDate();
-}
-
-function startOfWeek(date) {
-  const result = new Date(date);
-  result.setHours(0, 0, 0, 0);
-  result.setDate(result.getDate() - result.getDay());
-  return result;
-}
-
-function formatTime(date) {
-  return new Intl.DateTimeFormat("en-US", {
-    hour: "numeric",
-    minute: date.getMinutes() ? "2-digit" : undefined
-  }).format(date);
-}
-
-function renderMonth() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-
-  document.getElementById("month-title").textContent =
-    new Intl.DateTimeFormat("en-US", { month: "long", year: "numeric" }).format(today);
-
-  const grid = document.getElementById("month-grid");
-  grid.innerHTML = "";
-
-  ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(day => {
-    const el = document.createElement("div");
-    el.className = "weekday";
-    el.textContent = day;
-    grid.appendChild(el);
-  });
-
-  const first = new Date(year, month, 1);
-  const gridStart = new Date(year, month, 1 - first.getDay());
-
-  for (let i = 0; i < 42; i++) {
-    const date = new Date(gridStart);
-    date.setDate(gridStart.getDate() + i);
-
-    const cell = document.createElement("div");
-    cell.className = "day-cell";
-    if (date.getMonth() !== month) cell.classList.add("outside");
-    if (sameDay(date, today)) cell.classList.add("is-today");
-
-    const number = document.createElement("div");
-    number.className = "day-number";
-    number.textContent = date.getDate();
-    cell.appendChild(number);
-
-    const events = sampleEvents
-      .filter(event => sameDay(event.start, date))
-      .sort((a, b) => a.start - b.start);
-
-    events.slice(0, 3).forEach(event => {
-      const item = document.createElement("div");
-      item.className = `month-event ${familyColors[personFromTitle(event.title)]}`;
-      item.textContent = `${event.title} ${formatTime(event.start)}`;
-      cell.appendChild(item);
-    });
-
-    if (events.length > 3) {
-      const more = document.createElement("div");
-      more.className = "more";
-      more.textContent = `+ ${events.length - 3}`;
-      cell.appendChild(more);
-    }
-
-    grid.appendChild(cell);
-  }
-}
-
-function renderWeek() {
-  const today = new Date();
-  const weekStart = startOfWeek(today);
-  const grid = document.getElementById("week-grid");
-  grid.innerHTML = "";
-
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(weekStart);
-    date.setDate(weekStart.getDate() + i);
-
-    const day = document.createElement("article");
-    day.className = "week-day";
-    if (sameDay(date, today)) day.classList.add("is-today");
-
-    const header = document.createElement("header");
-    header.className = "week-day-header";
-    header.innerHTML = `
-      <div class="week-day-name">${new Intl.DateTimeFormat("en-US", { weekday: "short" }).format(date)}</div>
-      <div class="week-day-number">${date.getDate()}</div>
-    `;
-    day.appendChild(header);
-
-    const eventList = document.createElement("div");
-    eventList.className = "week-events";
-
-    const events = sampleEvents
-      .filter(event => sameDay(event.start, date))
-      .sort((a, b) => a.start - b.start);
-
-    events.slice(0, 6).forEach(event => {
-      const item = document.createElement("div");
-      item.className = `week-event ${familyColors[personFromTitle(event.title)]}`;
-      item.innerHTML = `
-        <div class="event-time">${formatTime(event.start)}</div>
-        <div class="event-title">${event.title}</div>
-      `;
-      eventList.appendChild(item);
-    });
-
-    day.appendChild(eventList);
-    grid.appendChild(day);
-  }
-}
-
-function renderToday() {
-  const today = new Date();
-  document.getElementById("today-title").textContent =
-    new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(today);
-
-  document.getElementById("today-date").innerHTML =
-    `${new Intl.DateTimeFormat("en-US", { month: "short" }).format(today)}<br>${today.getDate()}`;
-
-  const container = document.getElementById("today-events");
-  container.innerHTML = "";
-
-  const events = sampleEvents
-    .filter(event => sameDay(event.start, today))
-    .sort((a, b) => a.start - b.start)
-    .slice(0, 6);
-
-  if (!events.length) {
-    container.innerHTML = `<div class="empty">Nothing scheduled today</div>`;
-    return;
-  }
-
-  events.forEach(event => {
-    const item = document.createElement("div");
-    item.className = `today-event ${familyColors[personFromTitle(event.title)]}`;
-    item.innerHTML = `
-      <div class="today-time">${formatTime(event.start)}</div>
-      <div>
-        <div class="today-name">${personLabel(event.title)}</div>
-        <div class="today-description">${displayTitle(event.title)}</div>
-      </div>
-    `;
-    container.appendChild(item);
-  });
-}
-
-function updateClock() {
-  const now = new Date();
-  const text = new Intl.DateTimeFormat("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit"
-  }).format(now);
-
-  document.querySelectorAll(".clock").forEach(el => el.textContent = text);
-}
-
-const slides = [...document.querySelectorAll(".slide")];
-const dots = [...document.querySelectorAll(".dot")];
-let currentSlide = 0;
-let rotationTimer;
-
-function showSlide(index) {
-  currentSlide = index;
-  slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
-  dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
-}
-
-function startRotation() {
-  clearInterval(rotationTimer);
-  rotationTimer = setInterval(() => {
-    showSlide((currentSlide + 1) % slides.length);
-  }, 20000);
-}
-
-dots.forEach((dot, index) => {
-  dot.addEventListener("click", () => {
-    showSlide(index);
-    startRotation();
-  });
-});
-
-renderMonth();
-renderWeek();
-renderToday();
-updateClock();
-setInterval(updateClock, 30000);
-startRotation();
+function renderWidgets(id){let c=document.getElementById(id),u=events.filter(e=>e.start>=new Date(Y,M,D)&&e.start<=new Date(Y,M,D+31)).sort((a,b)=>a.start-b.start),arr=[];const normal=u.find(e=>!/^countdown\s*\|/i.test(e.title));arr.push(["Up Next","📅",normal?.title||"Nothing scheduled",normal?`${fd(normal.start)} · ${ft(normal.start)}`:""]);widgets.forEach(([n,i,fn])=>{let e=u.find(x=>fn(x.title.toLowerCase()));if(e){let main=n=="Countdown"?clean(e.title):e.title;let sub=n=="Countdown"?`${Math.ceil((e.start-new Date(Y,M,D))/86400000)} days`:`${fd(e.start)} · ${ft(e.start)}`;arr.push([n,n=="Celebrations"?(holiday(e.title)?.i||i):n=="Countdown"?(holiday(main)?.i||i):i,main,sub])}});c.innerHTML="";arr.slice(0,8).forEach(w=>c.innerHTML+=`<div class="widget"><div class="widget-title">${w[1]} ${w[0]}</div><div class="widget-main">${w[2]}</div><div class="widget-sub">${w[3]}</div></div>`)}
+function render(){theme();clocks();renderMonth();renderWeek();renderToday()}
+const slides=[...document.querySelectorAll(".slide")],dots=[...document.querySelectorAll(".dots button")];
+function show(i){current=i;slides.forEach((s,n)=>s.classList.toggle("active",n==i));dots.forEach((d,n)=>d.classList.toggle("active",n==i))}
+function duration(i){return [settings.monthSec,settings.weekSec,settings.todaySec][i]||15}
+function schedule(){clearTimeout(timer);timer=setTimeout(()=>{let n=current+1;if(current==3)n=0;else if(n>2){rotations++;n=settings.memoryFreq=="20"&&rotations%20==0?3:0}show(n);schedule()},(current==3?15:duration(current))*1000)}
+dots.forEach((d,i)=>d.onclick=()=>{show(i);schedule()});document.getElementById("prevMonth").onclick=()=>{displayMonth.setMonth(displayMonth.getMonth()-1);renderMonth()};document.getElementById("nextMonth").onclick=()=>{displayMonth.setMonth(displayMonth.getMonth()+1);renderMonth()};
+const dialog=document.getElementById("settings");document.getElementById("settingsBtn").onclick=()=>{document.getElementById("autoTheme").checked=settings.autoTheme;document.getElementById("manualTheme").value=settings.manualTheme;document.getElementById("monthSec").value=settings.monthSec;document.getElementById("weekSec").value=settings.weekSec;document.getElementById("todaySec").value=settings.todaySec;document.getElementById("memoryFreq").value=settings.memoryFreq;document.getElementById("birthdayIcons").checked=settings.birthdayIcons;document.getElementById("holidayIcons").checked=settings.holidayIcons;document.getElementById("showWeather").checked=settings.showWeather;document.getElementById("showCountdown").checked=settings.showCountdown;document.getElementById("weatherLocation").value=settings.weatherLocation;dialog.showModal()};
+document.getElementById("customBg").onchange=e=>{let f=e.target.files[0];if(f){let r=new FileReader();r.onload=()=>settings.customBg=r.result;r.readAsDataURL(f)}};
+document.getElementById("saveBtn").onclick=()=>{settings.autoTheme=document.getElementById("autoTheme").checked;settings.manualTheme=document.getElementById("manualTheme").value;settings.monthSec=+document.getElementById("monthSec").value||18;settings.weekSec=+document.getElementById("weekSec").value||25;settings.todaySec=+document.getElementById("todaySec").value||22;settings.memoryFreq=document.getElementById("memoryFreq").value;settings.birthdayIcons=document.getElementById("birthdayIcons").checked;settings.holidayIcons=document.getElementById("holidayIcons").checked;settings.showWeather=document.getElementById("showWeather").checked;settings.showCountdown=document.getElementById("showCountdown").checked;settings.weatherLocation=document.getElementById("weatherLocation").value||"Smiths Station, AL";localStorage.setItem("rfc-settings",JSON.stringify(settings));render();setupHourly();schedule()};
+document.getElementById("resetBtn").onclick=()=>{settings={...defaults};localStorage.setItem("rfc-settings",JSON.stringify(settings));render();schedule()};
+function setupHourly(){clearInterval(hourly);if(settings.memoryFreq=="hourly")hourly=setInterval(()=>{show(3);schedule()},3600000)}
+render();show(0);schedule();setupHourly();setInterval(clocks,30000);

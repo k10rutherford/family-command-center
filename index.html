@@ -1,55 +1,126 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Rutherford Family Command Center</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Rutherfords | Family Command Center</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main id="app">
-    <section class="slide active" id="month-slide" aria-label="Monthly calendar">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Rutherford Family Command Center</p>
-          <h1 id="month-title">Month</h1>
-        </div>
-        <div class="clock" id="clock"></div>
-      </header>
-      <div class="month-grid" id="month-grid"></div>
-    </section>
+  <button id="settingsBtn" class="settings-btn">⚙</button>
 
-    <section class="slide" id="week-slide" aria-label="Weekly calendar">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Rutherford Family Command Center</p>
-          <h1>This Week</h1>
-        </div>
-        <div class="clock clock-copy"></div>
-      </header>
-      <div class="week-grid" id="week-grid"></div>
-    </section>
+  <section id="month" class="slide active">
+    <header><div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div><div id="clock1"></div></header>
+    <div class="title-row"><button id="prevMonth">‹</button><h2 id="monthTitle"></h2><button id="nextMonth">›</button></div>
+    <div id="monthGrid" class="month-grid"></div>
+    <div id="monthWidgets" class="widgets"></div>
+  </section>
 
-    <section class="slide" id="today-slide" aria-label="Today's schedule">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">Rutherford Family Command Center</p>
-          <h1 id="today-title">Today</h1>
+  <section id="week" class="slide">
+    <header><div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div><div id="clock2"></div></header>
+    <div class="title-row"><h2>This Week</h2><span id="weekRange"></span></div>
+    <div id="weekGrid" class="week-grid"></div>
+    <div id="weekWidgets" class="widgets"></div>
+  </section>
+
+  <section id="today" class="slide">
+    <header><div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div><div id="clock3"></div></header>
+
+    <div class="today-layout">
+      <aside class="today-side">
+        <div class="date-card">
+          <div id="todayWeekday"></div>
+          <div id="todayMonth"></div>
+          <strong id="todayNumber"></strong>
+          <div id="themeIcon"></div>
         </div>
-        <div class="clock clock-copy"></div>
-      </header>
-      <div class="today-layout">
-        <div class="today-date" id="today-date"></div>
-        <div class="today-events" id="today-events"></div>
+
+        <div id="weatherCard" class="info-card weather-card">
+          <div class="info-icon" id="weatherIcon">☀️</div>
+          <div>
+            <div class="info-label">Weather</div>
+            <div class="info-main" id="weatherMain">89° · Sunny</div>
+            <div class="info-sub" id="weatherSub">High 92° · Low 74° · Rain 20%</div>
+          </div>
+        </div>
+
+        <div id="countdownCard" class="info-card countdown-card hidden">
+          <div class="info-icon" id="countdownIcon">⏳</div>
+          <div>
+            <div class="info-label">Countdown</div>
+            <div class="info-main" id="countdownTitle"></div>
+            <div class="info-sub" id="countdownDays"></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="today-main">
+        <div class="title-row"><h2>Today</h2><span id="todayFull"></span></div>
+        <div id="todayEvents"></div>
+      </main>
+    </div>
+
+    <div id="todayWidgets" class="widgets"></div>
+  </section>
+
+  <section id="memory" class="slide memory">
+    <div><h1>THE RUTHERFORDS</h1><h2>Family Memory</h2><p>Replace this placeholder with a favorite family photo.</p></div>
+  </section>
+
+  <div class="dots">
+    <button data-slide="0" class="active"></button><button data-slide="1"></button><button data-slide="2"></button>
+  </div>
+
+  <dialog id="settings">
+    <form method="dialog">
+      <div class="dialog-head"><h2>Dashboard Settings</h2><button value="cancel">×</button></div>
+
+      <label class="toggle">Automatic monthly themes <input id="autoTheme" type="checkbox"></label>
+      <label>Manual theme
+        <select id="manualTheme">
+          <option value="default">Default</option>
+          <option value="january">January · Winter</option>
+          <option value="february">February · Valentine’s</option>
+          <option value="march">March · St. Patrick’s</option>
+          <option value="april">April · Spring / Easter</option>
+          <option value="may">May · Spring</option>
+          <option value="june">June · Summer</option>
+          <option value="july">July · Patriotic</option>
+          <option value="august">August · Back to School</option>
+          <option value="september">September · Fall</option>
+          <option value="october">October · Halloween</option>
+          <option value="november">November · Thanksgiving</option>
+          <option value="december">December · Christmas</option>
+        </select>
+      </label>
+
+      <label>Custom background <input id="customBg" type="file" accept="image/*"></label>
+
+      <div class="timings">
+        <label>Month seconds <input id="monthSec" type="number" min="5" max="120"></label>
+        <label>Week seconds <input id="weekSec" type="number" min="5" max="120"></label>
+        <label>Today seconds <input id="todaySec" type="number" min="5" max="120"></label>
       </div>
-    </section>
 
-    <nav class="dots" aria-label="Slide position">
-      <button class="dot active" data-slide="0" aria-label="Show month"></button>
-      <button class="dot" data-slide="1" aria-label="Show week"></button>
-      <button class="dot" data-slide="2" aria-label="Show today"></button>
-    </nav>
-  </main>
+      <label>Family Memory
+        <select id="memoryFreq">
+          <option value="off">Off</option>
+          <option value="20">After 20 rotations</option>
+          <option value="hourly">Once an hour</option>
+        </select>
+      </label>
+
+      <label class="toggle">Birthday icons <input id="birthdayIcons" type="checkbox"></label>
+      <label class="toggle">Holiday icons <input id="holidayIcons" type="checkbox"></label>
+      <label class="toggle">Show weather <input id="showWeather" type="checkbox"></label>
+      <label class="toggle">Show countdown <input id="showCountdown" type="checkbox"></label>
+
+      <label>Weather location <input id="weatherLocation" type="text" placeholder="Smiths Station, AL"></label>
+
+      <div class="actions"><button id="resetBtn" type="button">Reset</button><button id="saveBtn" value="save">Save & Close</button></div>
+      <p class="version">Version 1.0 Test Build 2</p>
+    </form>
+  </dialog>
 
   <script src="app.js"></script>
 </body>
