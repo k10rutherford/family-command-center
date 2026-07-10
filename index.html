@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>The Rutherfords | Family Command Center</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
   <button id="settingsBtn" class="settings-btn">⚙</button>
@@ -12,7 +12,7 @@
   <section id="month" class="slide active">
     <header class="brand-header">
       <div class="brand-lockup">
-        <img class="brand-home" src="assets/logo/rutherford-logo.svg" alt="">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
         <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
       </div>
       <div class="family-legend" aria-label="Family color legend">
@@ -31,7 +31,7 @@
   <section id="week" class="slide">
     <header class="brand-header">
       <div class="brand-lockup">
-        <img class="brand-home" src="assets/logo/rutherford-logo.svg" alt="">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
         <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
       </div>
       <div class="family-legend" aria-label="Family color legend">
@@ -50,7 +50,7 @@
   <section id="today" class="slide">
     <header class="brand-header">
       <div class="brand-lockup">
-        <img class="brand-home" src="assets/logo/rutherford-logo.svg" alt="">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
         <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
       </div>
       <div class="family-legend" aria-label="Family color legend">
@@ -115,6 +115,30 @@
     <form method="dialog">
       <div class="dialog-head"><h2>Dashboard Settings</h2><button value="cancel">×</button></div>
 
+      
+      <section class="settings-section microsoft-section">
+        <h3>Microsoft Calendar</h3>
+        <div class="connection-row">
+          <div>
+            <strong id="microsoftStatus">Not connected</strong>
+            <small id="microsoftAccount">Connect the Outlook account used by Artful Agenda.</small>
+          </div>
+          <div class="connection-actions">
+            <button type="button" id="connectMicrosoft" class="primary-button">Connect Microsoft</button>
+            <button type="button" id="disconnectMicrosoft" class="secondary-button hidden">Sign Out</button>
+          </div>
+        </div>
+        <div id="calendarSelectionArea" class="calendar-selection hidden">
+          <div class="calendar-selection-header">
+            <strong>Calendars to display</strong>
+            <button type="button" id="refreshCalendarData" class="secondary-button compact-button">Refresh Now</button>
+          </div>
+          <div id="calendarCheckboxes" class="calendar-checkboxes"></div>
+          <small>“Your family” is selected automatically the first time it is found.</small>
+        </div>
+        <div id="calendarMessage" class="calendar-message"></div>
+      </section>
+
       <label class="toggle">Automatic monthly themes <input id="autoTheme" type="checkbox"></label>
       <label>Manual theme
         <select id="manualTheme">
@@ -158,10 +182,11 @@
       <label>Weather location <input id="weatherLocation" type="text" placeholder="Smiths Station, AL"></label>
 
       <div class="actions"><button id="resetBtn" type="button">Reset</button><button id="saveBtn" value="save">Save & Close</button></div>
-      <p class="version">Version 1.0 Test Build 5</p>
+      <p class="version">Version 2.0 · Live Calendar Edition</p>
     </form>
   </dialog>
 
-  <script src="app.js"></script>
+  <script src="msal-browser.min.js?v=7"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
