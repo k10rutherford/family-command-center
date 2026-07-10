@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>The Rutherfords | Family Command Center</title>
+  <link rel="stylesheet" href="styles.css?v=6">
+</head>
+<body>
+  <button id="settingsBtn" class="settings-btn">⚙</button>
+
+  <section id="month" class="slide active">
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
+        <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
+      </div>
+      <div class="family-legend" aria-label="Family color legend">
+        <span><i class="legend-dot bailey-dot"></i>Bailey</span>
+        <span><i class="legend-dot sophia-dot"></i>Sophia</span>
+        <span><i class="legend-dot cardin-dot"></i>Cardin</span>
+        <span><i class="legend-dot gray-dot"></i>Gray</span>
+      </div>
+      <div id="clock1"></div>
+    </header>
+    <div class="title-row"><button id="prevMonth">‹</button><h2 id="monthTitle"></h2><button id="nextMonth">›</button></div>
+    <div id="monthGrid" class="month-grid"></div>
+    <div id="monthWidgets" class="widgets"></div>
+  </section>
+
+  <section id="week" class="slide">
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
+        <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
+      </div>
+      <div class="family-legend" aria-label="Family color legend">
+        <span><i class="legend-dot bailey-dot"></i>Bailey</span>
+        <span><i class="legend-dot sophia-dot"></i>Sophia</span>
+        <span><i class="legend-dot cardin-dot"></i>Cardin</span>
+        <span><i class="legend-dot gray-dot"></i>Gray</span>
+      </div>
+      <div id="clock2"></div>
+    </header>
+    <div class="title-row"><h2>This Week</h2><span id="weekRange"></span></div>
+    <div id="weekGrid" class="week-grid"></div>
+    <div id="weekWidgets" class="widgets"></div>
+  </section>
+
+  <section id="today" class="slide">
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
+        <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
+      </div>
+      <div class="family-legend" aria-label="Family color legend">
+        <span><i class="legend-dot bailey-dot"></i>Bailey</span>
+        <span><i class="legend-dot sophia-dot"></i>Sophia</span>
+        <span><i class="legend-dot cardin-dot"></i>Cardin</span>
+        <span><i class="legend-dot gray-dot"></i>Gray</span>
+      </div>
+      <div id="clock3"></div>
+    </header>
+
+    <div class="today-layout">
+      <aside class="today-side">
+        <div class="date-card">
+          <div id="todayWeekday"></div>
+          <div id="todayMonth"></div>
+          <strong id="todayNumber"></strong>
+          <div id="themeIcon"></div>
+        </div>
+
+        <div id="weatherCard" class="info-card weather-card">
+          <div class="info-icon" id="weatherIcon"><svg class="weather-inline-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#f0a800" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="23" cy="22" r="10"/>
+  <path d="M23 6v5M23 33v5M7 22h5M34 22h5M12 11l4 4M30 30l4 4M34 11l-4 4"/>
+  <path d="M21 49h27c5 0 8-3 8-7s-3-7-8-7c-2-7-12-8-16-2-7-2-13 2-13 8 0 5 3 8 8 8Z"/>
+</svg></div>
+          <div>
+            <div class="info-label">Weather</div>
+            <div class="info-main" id="weatherMain">89° · Sunny</div>
+            <div class="info-sub" id="weatherSub">High 92° · Low 74° · Rain 20%</div>
+          </div>
+        </div>
+
+        <div id="countdownCard" class="info-card countdown-card hidden">
+          <div class="info-icon" id="countdownIcon">⏳</div>
+          <div>
+            <div class="info-label">Countdown</div>
+            <div class="info-main" id="countdownTitle"></div>
+            <div class="info-sub" id="countdownDays"></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="today-main">
+        <div class="title-row"><h2>Today</h2><span id="todayFull"></span></div>
+        <div id="todayEvents"></div>
+      </main>
+    </div>
+
+    <div id="todayWidgets" class="widgets"></div>
+  </section>
+
+  <section id="memory" class="slide memory">
+    <div><h1>THE RUTHERFORDS</h1><h2>Family Memory</h2><p>Replace this placeholder with a favorite family photo.</p></div>
+  </section>
+
+  <div class="dots">
+    <button data-slide="0" class="active"></button><button data-slide="1"></button><button data-slide="2"></button>
+  </div>
+
+  <dialog id="settings">
+    <form method="dialog">
+      <div class="dialog-head"><h2>Dashboard Settings</h2><button value="cancel">×</button></div>
+
+      <label class="toggle">Automatic monthly themes <input id="autoTheme" type="checkbox"></label>
+      <label>Manual theme
+        <select id="manualTheme">
+          <option value="default">Default</option>
+          <option value="january">January · Winter</option>
+          <option value="february">February · Valentine’s</option>
+          <option value="march">March · St. Patrick’s</option>
+          <option value="april">April · Spring / Easter</option>
+          <option value="may">May · Spring</option>
+          <option value="june">June · Summer</option>
+          <option value="july">July · Patriotic</option>
+          <option value="august">August · Back to School</option>
+          <option value="september">September · Fall</option>
+          <option value="october">October · Halloween</option>
+          <option value="november">November · Thanksgiving</option>
+          <option value="december">December · Christmas</option>
+        </select>
+      </label>
+
+      <label>Custom background <input id="customBg" type="file" accept="image/*"></label>
+
+      <div class="timings">
+        <label>Month seconds <input id="monthSec" type="number" min="5" max="120"></label>
+        <label>Week seconds <input id="weekSec" type="number" min="5" max="120"></label>
+        <label>Today seconds <input id="todaySec" type="number" min="5" max="120"></label>
+      </div>
+
+      <label>Family Memory
+        <select id="memoryFreq">
+          <option value="off">Off</option>
+          <option value="20">After 20 rotations</option>
+          <option value="hourly">Once an hour</option>
+        </select>
+      </label>
+
+      <label class="toggle">Birthday icons <input id="birthdayIcons" type="checkbox"></label>
+      <label class="toggle">Holiday icons <input id="holidayIcons" type="checkbox"></label>
+      <label class="toggle">Show weather <input id="showWeather" type="checkbox"></label>
+      <label class="toggle">Show countdown <input id="showCountdown" type="checkbox"></label>
+
+      <label>Weather location <input id="weatherLocation" type="text" placeholder="Smiths Station, AL"></label>
+
+      <div class="actions"><button id="resetBtn" type="button">Reset</button><button id="saveBtn" value="save">Save & Close</button></div>
+      <p class="version">Version 1.0 Test Build 6 · Flat Asset Edition</p>
+    </form>
+  </dialog>
+
+  <script src="app.js?v=6"></script>
+</body>
+</html>
