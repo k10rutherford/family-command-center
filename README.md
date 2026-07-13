@@ -1,38 +1,23 @@
-# The Rutherfords — Family Command Center v2.0 Live Calendar Edition
+# The Rutherfords — Family Command Center v2.1 Fire TV Layout
 
-## What this build adds
+This update keeps the live Microsoft calendar connection and adds TV-specific layout fixes for Amazon Silk:
 
-- Microsoft sign-in using the registered Azure/Entra application
-- Outlook calendar discovery
-- Calendar selection inside Dashboard Settings
-- Automatic selection of `Your family` when it is found
-- Live Month, Week, Today, and footer widgets
-- Recurring events expanded through Microsoft Graph calendarView
-- Automatic refresh every five minutes
-- Refresh Now and Sign Out controls
-- Existing family-name color rules retained
-- Sample events remain visible only until Microsoft is connected
+- Month title no longer hides behind the calendar
+- Month footer remains fully visible
+- Week heading reduced to match the header proportions
+- Week footer remains fully visible
+- Today heading no longer overlaps events
+- Today footer remains fully visible
+- Fire TV / 16:9 spacing activates automatically on large landscape screens
+- Laptop and desktop layouts remain unchanged
 
-## Upload
+## Update with GitHub Desktop
 
-Upload every file in this folder directly to the root of the GitHub repository, including:
-
-- `msal-browser.min.js`
-- all SVG files
-- `index.html`
-- `styles.css`
-- `app.js`
-- `README.md`
-
-## First connection
-
-1. Wait for GitHub Pages deployment.
-2. Open the live dashboard and hard-refresh.
-3. Open the gear.
-4. Select **Connect Microsoft**.
-5. Sign in with the Outlook account used by Artful Agenda.
-6. Approve `User.Read` and `Calendars.Read` if Microsoft asks.
-7. The app will discover calendars and select **Your family** automatically.
-8. Check or uncheck other calendars as desired.
-
-The app requests read-only calendar permission. It cannot create, edit, or delete Outlook events.
+1. Extract this ZIP somewhere outside your repository folder.
+2. Copy every file from inside the extracted folder into your local `family-command-center` repository folder.
+3. Choose **Replace the files in the destination**.
+4. In GitHub Desktop, use the summary:
+   `Fire TV layout fixes`
+5. Click **Commit to main**, then **Push origin**.
+6. Wait for GitHub Pages deployment.
+7. On Fire TV, open the dashboard with `?v=8` at the end of the URL or clear Silk's cache.
