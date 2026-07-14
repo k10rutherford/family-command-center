@@ -16,15 +16,14 @@
     const viewportWidth = window.innerWidth || document.documentElement.clientWidth || screen.width;
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight || screen.height;
 
-    const safeX = Math.max(18, viewportWidth * 0.018);
-    const safeTop = Math.max(12, viewportHeight * 0.012);
-    const safeBottom = Math.max(34, viewportHeight * 0.04);
+    const safeX = Math.max(20, viewportWidth * 0.025);
+    const safeY = Math.max(18, viewportHeight * 0.035);
     const usableWidth = viewportWidth - safeX * 2;
-    const usableHeight = viewportHeight - safeTop - safeBottom;
+    const usableHeight = viewportHeight - safeY * 2;
 
-    const scale = Math.min(usableWidth / designWidth, usableHeight / designHeight) * 0.97;
+    const scale = Math.min(usableWidth / designWidth, usableHeight / designHeight);
     const left = Math.max(safeX, (viewportWidth - designWidth * scale) / 2);
-    const top = Math.max(safeTop, (viewportHeight - safeBottom - designHeight * scale) / 2);
+    const top = Math.max(safeY, (viewportHeight - designHeight * scale) / 2);
 
     document.documentElement.style.setProperty("--tv-scale", String(scale));
     document.documentElement.style.setProperty("--tv-left", `${left}px`);

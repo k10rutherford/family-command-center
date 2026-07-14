@@ -1,14 +1,15 @@
-# The Rutherfords — Family Command Center v2.4 Fire TV Safe Area
+# The Rutherfords — Family Command Center v2.5 True Desktop Scale
 
-This build keeps the desktop-match 1920×1080 layout, but adds extra safe space for Fire TV overscan and Silk's bottom browser area.
+Important fix:
+The prior desktop-match build tried to scale an element named `#app`, but the HTML did not contain that element. As a result, the dashboard stayed oversized and cropped.
 
-Changes:
-- Scales the whole dashboard down slightly
-- Adds left/right TV safe margins
-- Adds extra bottom clearance
-- Raises the dashboard slightly
-- Keeps Month, Week, Today, and footer proportions consistent with desktop
-- Preserves live Microsoft calendar integration
+This build:
+- Adds the missing `#app` wrapper
+- Scales the entire 1920×1080 desktop dashboard as one unit
+- Centers it within the Fire TV screen
+- Leaves safe margins for Silk and TV overscan
+- Keeps the same proportions as the computer display
+- Preserves the live Microsoft calendar connection
 
-Open on Fire TV with:
-https://k10rutherford.github.io/family-command-center/?v=11&tv=1
+Use on Fire TV:
+https://k10rutherford.github.io/family-command-center/?v=12&tv=1
