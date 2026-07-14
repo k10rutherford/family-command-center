@@ -1,15 +1,34 @@
-# The Rutherfords — Family Command Center v2.8
+# The Rutherfords — Family Command Center v2.9
 
-Fixes:
-- Settings dialog reduced further for Fire TV
-- Settings now fits within the visible viewport
-- Settings content scrolls inside the dialog
-- Monthly background layer moved inside the scaled dashboard
-- Slides and cards made slightly translucent so themes show through
-- July background made more visibly patriotic
-- Manual monthly background selection now uses the same working backdrop
-- Custom uploaded image uses the same working backdrop
-- Countdown settings from v2.7 remain included
+Adds:
+- Smart keyword icons:
+  - Dentist / Ortho / Braces → tooth
+  - Doctor / Pediatrician → stethoscope
+  - School / First Day → schoolhouse
+  - Appointment / Appt → calendar
+  - Hair → scissors
+  - Nail → nail polish
+  - Vet → paw
+  - Anniversary → heart
+  - Party → party icon
+  - Award / Awards Day → trophy
+  - Church → church
+  - Graduation → cap
+  - Vacation / Trip → airplane
+- “Game” does not trigger a trophy
+- Whitney events are yellow
+- Whitney is not added to the legend
+- Family Status Bar on Today
+- New Right Now dashboard:
+  - Good Morning before noon
+  - Good Afternoon noon–6 PM
+  - Good Evening 6 PM–6 AM
+  - Today’s Weather
+  - Today’s Schedule
+  - Family Status
+  - Birthdays
+  - Countdown
+- Right Now is included in slideshow rotation
 
 Fire TV URL:
-https://k10rutherford.github.io/family-command-center/?v=15&tv=1
+https://k10rutherford.github.io/family-command-center/?v=16&tv=1

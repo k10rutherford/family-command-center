@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>The Rutherfords | Family Command Center</title>
-  <link rel="stylesheet" href="styles.css?v=15">
+  <link rel="stylesheet" href="styles.css?v=16">
 </head>
 <body>
   <div id="app">
@@ -98,6 +98,7 @@
 
       <main class="today-main">
         <div class="title-row"><h2>Today</h2><span id="todayFull"></span></div>
+        <div id="todayStatusBar" class="family-status-bar"></div>
         <div id="todayEvents"></div>
       </main>
     </div>
@@ -105,12 +106,67 @@
     <div id="todayWidgets" class="widgets"></div>
   </section>
 
+
+  <section id="rightnow" class="slide right-now-slide">
+    <header class="brand-header">
+      <div class="brand-lockup">
+        <img class="brand-home" src="rutherford-logo.svg?v=6" alt="">
+        <div><h1>THE RUTHERFORDS</h1><p>FAMILY COMMAND CENTER</p></div>
+      </div>
+      <div class="family-legend" aria-label="Family color legend">
+        <span><i class="legend-dot bailey-dot"></i>Bailey</span>
+        <span><i class="legend-dot sophia-dot"></i>Sophia</span>
+        <span><i class="legend-dot cardin-dot"></i>Cardin</span>
+        <span><i class="legend-dot gray-dot"></i>Gray</span>
+      </div>
+      <div id="clock4"></div>
+    </header>
+
+    <div class="right-now-heading">
+      <div>
+        <div id="rightNowGreeting" class="right-now-greeting">Good Evening</div>
+        <h2>Right Now</h2>
+      </div>
+      <div id="rightNowDate" class="right-now-date"></div>
+    </div>
+
+    <div class="right-now-grid">
+      <section class="right-now-card right-now-weather">
+        <div class="right-now-card-title">Today’s Weather</div>
+        <div class="right-now-weather-main" id="rightNowWeatherMain">89° · Sunny</div>
+        <div class="right-now-card-sub" id="rightNowWeatherSub"></div>
+      </section>
+
+      <section class="right-now-card right-now-status">
+        <div class="right-now-card-title">Family Status</div>
+        <div id="rightNowStatusBar" class="right-now-status-list"></div>
+      </section>
+
+      <section class="right-now-card right-now-schedule">
+        <div class="right-now-card-title">Today’s Schedule</div>
+        <div id="rightNowSchedule" class="right-now-schedule-list"></div>
+      </section>
+
+      <section class="right-now-card right-now-birthdays">
+        <div class="right-now-card-title">Birthdays</div>
+        <div id="rightNowBirthdays" class="right-now-simple-list"></div>
+      </section>
+
+      <section class="right-now-card right-now-countdown">
+        <div class="right-now-card-title">Countdown</div>
+        <div id="rightNowCountdown" class="right-now-countdown-value"></div>
+      </section>
+    </div>
+
+    <div id="rightNowWidgets" class="widgets"></div>
+  </section>
+
   <section id="memory" class="slide memory">
     <div><h1>THE RUTHERFORDS</h1><h2>Family Memory</h2><p>Replace this placeholder with a favorite family photo.</p></div>
   </section>
 
   <div class="dots">
-    <button data-slide="0" class="active"></button><button data-slide="1"></button><button data-slide="2"></button>
+    <button data-slide="0" class="active"></button><button data-slide="1"></button><button data-slide="2"></button><button data-slide="3"></button>
   </div>
 
 
@@ -212,11 +268,11 @@
       <label>Weather location <input id="weatherLocation" type="text" placeholder="Smiths Station, AL"></label>
 
       <div class="actions"><button id="resetBtn" type="button">Reset</button><button id="saveBtn" value="save">Save & Close</button></div>
-      <p class="version">Version 2.8 · Settings & Background Fix</p>
+      <p class="version">Version 2.9 · Right Now & Smart Icons</p>
     </form>
   </dialog>
 
-  <script src="msal-browser.min.js?v=15"></script>
-  <script src="app.js?v=15"></script>
+  <script src="msal-browser.min.js?v=16"></script>
+  <script src="app.js?v=16"></script>
 </body>
 </html>
