@@ -849,3 +849,94 @@ body.fire-tv {
   right: 18px !important;
   bottom: 18px !important;
 }
+
+
+/* =========================================================
+   Version 2.6 — Final Fire TV readability sizing
+   Keeps the successful full-screen scale and enlarges only:
+   - Rutherford family header
+   - family legend
+   - footer widgets
+   ========================================================= */
+
+.fire-tv .brand-home {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+}
+
+.fire-tv .brand-lockup {
+  gap: 14px !important;
+}
+
+.fire-tv .brand-lockup h1 {
+  font-size: 47px !important;
+  line-height: 1 !important;
+  letter-spacing: .055em !important;
+}
+
+.fire-tv .brand-lockup p {
+  font-size: 18px !important;
+  line-height: 1.05 !important;
+  letter-spacing: .17em !important;
+  margin-top: 6px !important;
+}
+
+.fire-tv .family-legend {
+  font-size: 18px !important;
+  gap: 24px !important;
+  font-weight: 600 !important;
+}
+
+.fire-tv .legend-dot {
+  width: 13px !important;
+  height: 13px !important;
+}
+
+/* Give the footer a little more vertical presence without changing the page scale. */
+.fire-tv #month .widgets,
+.fire-tv #week .widgets,
+.fire-tv #today .widgets {
+  height: 148px !important;
+  min-height: 148px !important;
+  padding-top: 14px !important;
+}
+
+.fire-tv .widget {
+  grid-template-columns: 42px minmax(0, 1fr) !important;
+  column-gap: 12px !important;
+  padding: 14px 16px !important;
+}
+
+.fire-tv .widget-icon-wrap {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+.fire-tv .widget-icon-img {
+  width: 31px !important;
+  height: 31px !important;
+}
+
+.fire-tv .widget-title {
+  font-size: 15px !important;
+  letter-spacing: .045em !important;
+}
+
+.fire-tv .widget-main {
+  font-size: 20px !important;
+  line-height: 1.08 !important;
+  margin-top: 5px !important;
+}
+
+.fire-tv .widget-sub {
+  font-size: 15px !important;
+  line-height: 1.08 !important;
+  margin-top: 3px !important;
+}
+
+/* Preserve safe spacing above slide dots after enlarging footer cards. */
+.fire-tv .dots,
+.fire-tv .slide-dots {
+  bottom: 10px !important;
+}

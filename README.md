@@ -1,15 +1,14 @@
-# The Rutherfords — Family Command Center v2.5 True Desktop Scale
+# The Rutherfords — Family Command Center v2.6 Final TV Sizing
 
-Important fix:
-The prior desktop-match build tried to scale an element named `#app`, but the HTML did not contain that element. As a result, the dashboard stayed oversized and cropped.
+This update keeps the successful full-screen Fire TV scale from v2.5 and enlarges only the requested elements:
 
-This build:
-- Adds the missing `#app` wrapper
-- Scales the entire 1920×1080 desktop dashboard as one unit
-- Centers it within the Fire TV screen
-- Leaves safe margins for Silk and TV overscan
-- Keeps the same proportions as the computer display
-- Preserves the live Microsoft calendar connection
+- “THE RUTHERFORDS”
+- “FAMILY COMMAND CENTER”
+- family legend and color dots
+- bottom widget icons
+- bottom widget labels, event names, and times
+
+Everything else remains at the same layout and scale.
 
 Use on Fire TV:
-https://k10rutherford.github.io/family-command-center/?v=12&tv=1
+https://k10rutherford.github.io/family-command-center/?v=13&tv=1
