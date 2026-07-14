@@ -1,23 +1,23 @@
-# The Rutherfords — Family Command Center v2.1 Fire TV Layout
+# The Rutherfords — Family Command Center v2.2 Silk TV Layout
 
-This update keeps the live Microsoft calendar connection and adds TV-specific layout fixes for Amazon Silk:
+Why v2.1 looked unchanged:
+Amazon Silk reported a smaller CSS viewport, so the large-screen media query never activated.
 
-- Month title no longer hides behind the calendar
-- Month footer remains fully visible
-- Week heading reduced to match the header proportions
-- Week footer remains fully visible
-- Today heading no longer overlaps events
-- Today footer remains fully visible
-- Fire TV / 16:9 spacing activates automatically on large landscape screens
-- Laptop and desktop layouts remain unchanged
+This build fixes that by detecting Silk/Fire TV in JavaScript and forcing a dedicated `.fire-tv` layout.
 
-## Update with GitHub Desktop
+Changes:
+- Month title remains fully visible
+- Month footer is fully visible
+- “This Week” is smaller
+- Weekly footer is fully visible
+- “Today” no longer overlaps events
+- Today footer is fully visible
+- Live Microsoft calendar connection remains unchanged
 
-1. Extract this ZIP somewhere outside your repository folder.
-2. Copy every file from inside the extracted folder into your local `family-command-center` repository folder.
-3. Choose **Replace the files in the destination**.
-4. In GitHub Desktop, use the summary:
-   `Fire TV layout fixes`
-5. Click **Commit to main**, then **Push origin**.
-6. Wait for GitHub Pages deployment.
-7. On Fire TV, open the dashboard with `?v=8` at the end of the URL or clear Silk's cache.
+Use GitHub Desktop:
+1. Extract this ZIP outside the repository folder.
+2. Copy all files inside into the local `family-command-center` folder.
+3. Replace existing files.
+4. Commit: `Force Silk TV layout`
+5. Push origin.
+6. On Fire TV, open the site with `?v=9`.

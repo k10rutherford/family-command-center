@@ -320,224 +320,237 @@ body::after{
 
 
 /* =========================================================
-   Version 2.1 — Fire TV / 16:9 layout optimization
+   Version 2.2 — Amazon Silk / Fire TV forced layout
+   Silk often reports a smaller CSS viewport, so the earlier
+   min-width media query did not activate. These rules use a
+   .fire-tv class added by JavaScript instead.
    ========================================================= */
 
-@media (min-width: 1200px) and (orientation: landscape) {
-  html, body {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .slide {
-    height: 100vh;
-    padding: 1.2vh 1.8vw 4.2vh;
-  }
-
-  .brand-header {
-    min-height: 8.4vh;
-    height: 8.4vh;
-  }
-
-  .brand-lockup h1 {
-    font-size: clamp(28px, 2.15vw, 40px);
-  }
-
-  .brand-lockup p {
-    font-size: clamp(10px, .82vw, 15px);
-  }
-
-  .header-date {
-    font-size: clamp(14px, 1.05vw, 20px);
-    line-height: 1.25;
-  }
-
-  /* MONTH */
-  #month .title-row {
-    height: 6.6vh;
-    min-height: 6.6vh;
-    position: relative;
-    z-index: 3;
-    margin-bottom: .5vh;
-  }
-
-  #month .title-row h2,
-  #monthTitle {
-    font-size: clamp(34px, 3.2vw, 58px);
-    line-height: 1;
-    margin: 0;
-  }
-
-  #month .month-grid {
-    height: auto;
-    flex: 1 1 auto;
-    min-height: 0;
-  }
-
-  #month .widgets {
-    height: 12.8vh;
-    min-height: 12.8vh;
-    padding-top: .7vh;
-  }
-
-  /* WEEK */
-  #week .title-row {
-    height: 5.7vh;
-    min-height: 5.7vh;
-    align-items: center;
-  }
-
-  #week .title-row h2 {
-    font-size: clamp(28px, 2.25vw, 42px);
-    line-height: 1;
-  }
-
-  #week .week-grid {
-    flex: 1 1 auto;
-    min-height: 0;
-    height: auto;
-  }
-
-  #week .widgets {
-    height: 12.8vh;
-    min-height: 12.8vh;
-    padding-top: .7vh;
-  }
-
-  .week-head {
-    padding: .65vh .3vw;
-  }
-
-  .week-head strong {
-    font-size: clamp(26px, 2.2vw, 40px);
-  }
-
-  .week-event {
-    margin: .45vh .38vw;
-    padding: .55vh .42vw;
-  }
-
-  /* TODAY */
-  #today .today-layout {
-    flex: 1 1 auto;
-    min-height: 0;
-    gap: 1vw;
-  }
-
-  #today .today-main {
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  #today .today-main .title-row {
-    height: 5.9vh;
-    min-height: 5.9vh;
-    align-items: center;
-    padding-bottom: .45vh;
-  }
-
-  #today .today-main .title-row h2 {
-    font-size: clamp(34px, 2.75vw, 50px);
-    line-height: 1;
-    margin: 0;
-  }
-
-  #today .today-events {
-    height: calc(100% - 5.9vh);
-    min-height: 0;
-    gap: .7vh;
-    overflow: hidden;
-  }
-
-  #today .today-event {
-    min-height: 0;
-    padding: .85vh .8vw;
-  }
-
-  #today .today-title {
-    font-size: clamp(24px, 2vw, 38px);
-    line-height: 1.05;
-  }
-
-  #today .today-time {
-    font-size: clamp(18px, 1.55vw, 28px);
-  }
-
-  #today .widgets {
-    height: 12.8vh;
-    min-height: 12.8vh;
-    padding-top: .7vh;
-  }
-
-  .today-side {
-    min-height: 0;
-  }
-
-  .date-card strong {
-    font-size: clamp(76px, 7.8vw, 130px);
-  }
-
-  .date-card > div:nth-child(2) {
-    font-size: clamp(28px, 2.3vw, 42px);
-  }
-
-  .info-card {
-    padding: 1.2vh .9vw;
-  }
-
-  .info-main {
-    font-size: clamp(20px, 1.65vw, 30px);
-  }
-
-  .info-sub {
-    font-size: clamp(12px, .95vw, 17px);
-    line-height: 1.15;
-  }
-
-  /* FOOTER WIDGETS */
-  .widgets {
-    overflow: visible;
-  }
-
-  .widget {
-    min-height: 0;
-    padding: .75vh .65vw;
-  }
-
-  .widget-main {
-    font-size: clamp(13px, .92vw, 17px);
-    line-height: 1.05;
-  }
-
-  .widget-sub {
-    font-size: clamp(10px, .75vw, 14px);
-    line-height: 1.05;
-  }
-
-  .dots,
-  .slide-dots {
-    bottom: .7vh;
-  }
+html.fire-tv,
+body.fire-tv {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-@media (min-width: 1200px) and (max-height: 800px) {
-  .slide {
-    padding-bottom: 5.4vh;
-  }
+.fire-tv .slide {
+  height: 100vh;
+  padding: 1vh 1.5vw 5.2vh;
+}
 
-  #month .widgets,
-  #week .widgets,
-  #today .widgets {
-    height: 13.6vh;
-    min-height: 13.6vh;
-  }
+.fire-tv .brand-header {
+  height: 8vh;
+  min-height: 8vh;
+}
 
-  #week .title-row h2 {
-    font-size: 34px;
-  }
+.fire-tv .brand-home {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
 
-  #today .today-main .title-row h2 {
-    font-size: 42px;
-  }
+.fire-tv .brand-lockup h1 {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.fire-tv .brand-lockup p {
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+.fire-tv .family-legend {
+  font-size: 12px;
+  gap: 10px;
+}
+
+.fire-tv .header-date {
+  font-size: 17px;
+  line-height: 1.15;
+}
+
+/* MONTH */
+.fire-tv #month .title-row {
+  height: 6.2vh;
+  min-height: 6.2vh;
+  margin-bottom: .4vh;
+  position: relative;
+  z-index: 5;
+}
+
+.fire-tv #month .title-row h2,
+.fire-tv #monthTitle {
+  font-size: 44px;
+  line-height: 1;
+  margin: 0;
+}
+
+.fire-tv #month .month-grid {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+.fire-tv #month .widgets {
+  height: 14vh;
+  min-height: 14vh;
+  padding-top: .7vh;
+}
+
+/* WEEK */
+.fire-tv #week .title-row {
+  height: 5.4vh;
+  min-height: 5.4vh;
+}
+
+.fire-tv #week .title-row h2 {
+  font-size: 30px;
+  line-height: 1;
+}
+
+.fire-tv #week .week-grid {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 0;
+}
+
+.fire-tv #week .widgets {
+  height: 14vh;
+  min-height: 14vh;
+  padding-top: .7vh;
+}
+
+.fire-tv .week-head {
+  padding: 5px 4px;
+}
+
+.fire-tv .week-head strong {
+  font-size: 31px;
+}
+
+.fire-tv .week-event {
+  margin: 4px 5px;
+  padding: 6px;
+}
+
+.fire-tv .week-event b {
+  font-size: 15px;
+  line-height: 1.08;
+}
+
+.fire-tv .week-event small {
+  font-size: 12px;
+}
+
+/* TODAY */
+.fire-tv #today .today-layout {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: 10px;
+}
+
+.fire-tv #today .today-main {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fire-tv #today .today-main .title-row {
+  height: 5.4vh;
+  min-height: 5.4vh;
+  padding-bottom: 4px;
+}
+
+.fire-tv #today .today-main .title-row h2 {
+  font-size: 38px;
+  line-height: 1;
+  margin: 0;
+}
+
+.fire-tv #today #todayEvents {
+  height: calc(100% - 5.4vh);
+  overflow: hidden;
+}
+
+.fire-tv #today .today-event {
+  padding: 9px 12px;
+  margin-bottom: 7px;
+}
+
+.fire-tv #today .today-event .time {
+  font-size: 22px;
+}
+
+.fire-tv #today .today-event .title {
+  font-size: 29px;
+  line-height: 1.05;
+}
+
+.fire-tv #today .widgets {
+  height: 14vh;
+  min-height: 14vh;
+  padding-top: .7vh;
+}
+
+.fire-tv .today-side {
+  min-height: 0;
+}
+
+.fire-tv .date-card strong {
+  font-size: 88px;
+}
+
+.fire-tv .date-card > div:nth-child(2) {
+  font-size: 32px;
+}
+
+.fire-tv .info-card {
+  padding: 10px 12px;
+}
+
+.fire-tv .info-main {
+  font-size: 23px;
+}
+
+.fire-tv .info-sub {
+  font-size: 12px;
+  line-height: 1.12;
+}
+
+/* FOOTERS */
+.fire-tv .widgets {
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.fire-tv .widget {
+  padding: 7px 8px;
+}
+
+.fire-tv .widget-icon-wrap {
+  width: 25px;
+  height: 25px;
+}
+
+.fire-tv .widget-icon-img {
+  width: 21px;
+  height: 21px;
+}
+
+.fire-tv .widget-title {
+  font-size: 10px;
+}
+
+.fire-tv .widget-main {
+  font-size: 13px;
+  line-height: 1.05;
+}
+
+.fire-tv .widget-sub {
+  font-size: 10px;
+  line-height: 1.05;
+}
+
+.fire-tv .dots,
+.fire-tv .slide-dots {
+  bottom: .5vh;
 }

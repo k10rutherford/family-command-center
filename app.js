@@ -1,3 +1,14 @@
+
+(function detectFireTvSilk(){
+  const ua = navigator.userAgent || "";
+  const isSilk = /Silk|AFT|Fire TV/i.test(ua);
+  const looksLikeTv = window.screen && window.screen.width >= 1200 && window.screen.height >= 600;
+  if (isSilk || looksLikeTv) {
+    document.documentElement.classList.add("fire-tv");
+    document.body.classList.add("fire-tv");
+  }
+})();
+
 const people={bailey:["bailey"],sophia:["sophia","soph"],cardin:["cardin"],gray:["gray","grayson"]};
 const defaults={autoTheme:true,manualTheme:"default",customBg:"",monthSec:18,weekSec:25,todaySec:22,memoryFreq:"off",birthdayIcons:true,holidayIcons:true,showWeather:true,showCountdown:true,weatherLocation:"Smiths Station, AL"};
 let settings={...defaults,...JSON.parse(localStorage.getItem("rfc-settings")||"{}")}, displayMonth=new Date(), current=0, rotations=0, timer, hourly;
