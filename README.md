@@ -1,23 +1,14 @@
-# The Rutherfords — Family Command Center v2.2 Silk TV Layout
+# The Rutherfords — Family Command Center v2.4 Fire TV Safe Area
 
-Why v2.1 looked unchanged:
-Amazon Silk reported a smaller CSS viewport, so the large-screen media query never activated.
-
-This build fixes that by detecting Silk/Fire TV in JavaScript and forcing a dedicated `.fire-tv` layout.
+This build keeps the desktop-match 1920×1080 layout, but adds extra safe space for Fire TV overscan and Silk's bottom browser area.
 
 Changes:
-- Month title remains fully visible
-- Month footer is fully visible
-- “This Week” is smaller
-- Weekly footer is fully visible
-- “Today” no longer overlaps events
-- Today footer is fully visible
-- Live Microsoft calendar connection remains unchanged
+- Scales the whole dashboard down slightly
+- Adds left/right TV safe margins
+- Adds extra bottom clearance
+- Raises the dashboard slightly
+- Keeps Month, Week, Today, and footer proportions consistent with desktop
+- Preserves live Microsoft calendar integration
 
-Use GitHub Desktop:
-1. Extract this ZIP outside the repository folder.
-2. Copy all files inside into the local `family-command-center` folder.
-3. Replace existing files.
-4. Commit: `Force Silk TV layout`
-5. Push origin.
-6. On Fire TV, open the site with `?v=9`.
+Open on Fire TV with:
+https://k10rutherford.github.io/family-command-center/?v=11&tv=1

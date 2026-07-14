@@ -554,3 +554,275 @@ body.fire-tv {
 .fire-tv .slide-dots {
   bottom: .5vh;
 }
+
+
+/* =========================================================
+   Version 2.3 — Desktop-match Fire TV mode
+   Renders the same 1920×1080 layout used on the computer,
+   then scales the entire dashboard to fit Amazon Silk.
+   ========================================================= */
+
+html.fire-tv,
+body.fire-tv {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden !important;
+  background: #f7f5f1;
+}
+
+.fire-tv #app {
+  position: fixed;
+  left: var(--tv-left, 0px);
+  top: var(--tv-top, 0px);
+  width: 1920px;
+  height: 1080px;
+  transform: scale(var(--tv-scale, 1));
+  transform-origin: top left;
+  overflow: hidden;
+}
+
+/* Restore the regular desktop dimensions inside the virtual stage. */
+.fire-tv .slide {
+  width: 1920px !important;
+  height: 1080px !important;
+  padding: 22px 34px 58px !important;
+}
+
+.fire-tv .brand-header {
+  height: 108px !important;
+  min-height: 108px !important;
+}
+
+.fire-tv .brand-home {
+  width: 48px !important;
+  height: 48px !important;
+  min-width: 48px !important;
+}
+
+.fire-tv .brand-lockup h1 {
+  font-size: 38px !important;
+  line-height: 1.05 !important;
+}
+
+.fire-tv .brand-lockup p {
+  font-size: 15px !important;
+  margin-top: 4px !important;
+}
+
+.fire-tv .family-legend {
+  font-size: 14px !important;
+  gap: 18px !important;
+}
+
+.fire-tv .header-date {
+  font-size: 22px !important;
+  line-height: 1.22 !important;
+}
+
+/* Month — identical proportions to desktop */
+.fire-tv #month .title-row {
+  height: 76px !important;
+  min-height: 76px !important;
+  margin: 0 !important;
+}
+
+.fire-tv #month .title-row h2,
+.fire-tv #monthTitle {
+  font-size: 54px !important;
+  line-height: 1 !important;
+}
+
+.fire-tv #month .month-grid {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.fire-tv #month .widgets {
+  height: 132px !important;
+  min-height: 132px !important;
+  padding-top: 12px !important;
+}
+
+/* Week — same visual hierarchy as desktop */
+.fire-tv #week .title-row {
+  height: 68px !important;
+  min-height: 68px !important;
+}
+
+.fire-tv #week .title-row h2 {
+  font-size: 44px !important;
+  line-height: 1 !important;
+}
+
+.fire-tv #week .week-grid {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.fire-tv #week .widgets {
+  height: 132px !important;
+  min-height: 132px !important;
+  padding-top: 12px !important;
+}
+
+.fire-tv .week-head {
+  padding: 10px 5px !important;
+}
+
+.fire-tv .week-head strong {
+  font-size: 38px !important;
+}
+
+.fire-tv .week-event {
+  margin: 7px !important;
+  padding: 8px !important;
+}
+
+.fire-tv .week-event b {
+  font-size: 17px !important;
+  line-height: 1.12 !important;
+}
+
+.fire-tv .week-event small {
+  font-size: 13px !important;
+}
+
+/* Today — desktop spacing, no overlap */
+.fire-tv #today .today-layout {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  gap: 16px !important;
+}
+
+.fire-tv #today .today-main {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+.fire-tv #today .today-main .title-row {
+  height: 72px !important;
+  min-height: 72px !important;
+  padding-bottom: 8px !important;
+}
+
+.fire-tv #today .today-main .title-row h2 {
+  font-size: 50px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+.fire-tv #today #todayEvents {
+  height: calc(100% - 72px) !important;
+  overflow: hidden !important;
+}
+
+.fire-tv #today .today-event {
+  padding: 14px 18px !important;
+  margin-bottom: 10px !important;
+}
+
+.fire-tv #today .today-event .time {
+  font-size: 27px !important;
+}
+
+.fire-tv #today .today-event .title {
+  font-size: 40px !important;
+  line-height: 1.05 !important;
+}
+
+.fire-tv #today .widgets {
+  height: 132px !important;
+  min-height: 132px !important;
+  padding-top: 12px !important;
+}
+
+.fire-tv .date-card strong {
+  font-size: 132px !important;
+}
+
+.fire-tv .date-card > div:nth-child(2) {
+  font-size: 45px !important;
+}
+
+.fire-tv .info-card {
+  padding: 18px !important;
+}
+
+.fire-tv .info-main {
+  font-size: 28px !important;
+}
+
+.fire-tv .info-sub {
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+}
+
+/* Footer cards */
+.fire-tv .widgets {
+  overflow: hidden !important;
+  align-items: stretch !important;
+}
+
+.fire-tv .widget {
+  padding: 10px 12px !important;
+}
+
+.fire-tv .widget-icon-wrap {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.fire-tv .widget-icon-img {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.fire-tv .widget-title {
+  font-size: 12px !important;
+}
+
+.fire-tv .widget-main {
+  font-size: 15px !important;
+  line-height: 1.08 !important;
+}
+
+.fire-tv .widget-sub {
+  font-size: 12px !important;
+  line-height: 1.08 !important;
+}
+
+.fire-tv .dots,
+.fire-tv .slide-dots {
+  bottom: 12px !important;
+}
+
+/* Dialog stays usable on the virtual stage. */
+.fire-tv dialog {
+  max-height: 920px;
+}
+
+
+/* Version 2.4 — Fire TV safe-area refinement */
+.fire-tv .slide {
+  padding-bottom: 72px !important;
+}
+
+.fire-tv #month .widgets,
+.fire-tv #week .widgets,
+.fire-tv #today .widgets {
+  height: 122px !important;
+  min-height: 122px !important;
+}
+
+.fire-tv .dots,
+.fire-tv .slide-dots {
+  bottom: 20px !important;
+}
+
+.fire-tv .settings-btn {
+  right: 22px !important;
+  bottom: 22px !important;
+}

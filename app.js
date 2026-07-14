@@ -1,14 +1,39 @@
 
-(function detectFireTvSilk(){
+
+(function setupDisplayMode(){
   const ua = navigator.userAgent || "";
   const isSilk = /Silk|AFT|Fire TV/i.test(ua);
-  const looksLikeTv = window.screen && window.screen.width >= 1200 && window.screen.height >= 600;
-  if (isSilk || looksLikeTv) {
+  const forceTv = new URLSearchParams(location.search).get("tv") === "1";
+
+  function sizeTvStage(){
+    if (!(isSilk || forceTv)) return;
+
     document.documentElement.classList.add("fire-tv");
     document.body.classList.add("fire-tv");
-  }
-})();
 
+    const designWidth = 1920;
+    const designHeight = 1080;
+    const viewportWidth = window.innerWidth || document.documentElement.clientWidth || screen.width;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || screen.height;
+
+    const safeX = Math.max(18, viewportWidth * 0.018);
+    const safeTop = Math.max(12, viewportHeight * 0.012);
+    const safeBottom = Math.max(34, viewportHeight * 0.04);
+    const usableWidth = viewportWidth - safeX * 2;
+    const usableHeight = viewportHeight - safeTop - safeBottom;
+
+    const scale = Math.min(usableWidth / designWidth, usableHeight / designHeight) * 0.97;
+    const left = Math.max(safeX, (viewportWidth - designWidth * scale) / 2);
+    const top = Math.max(safeTop, (viewportHeight - safeBottom - designHeight * scale) / 2);
+
+    document.documentElement.style.setProperty("--tv-scale", String(scale));
+    document.documentElement.style.setProperty("--tv-left", `${left}px`);
+    document.documentElement.style.setProperty("--tv-top", `${top}px`);
+  }
+
+  sizeTvStage();
+  window.addEventListener("resize", sizeTvStage);
+})();
 const people={bailey:["bailey"],sophia:["sophia","soph"],cardin:["cardin"],gray:["gray","grayson"]};
 const defaults={autoTheme:true,manualTheme:"default",customBg:"",monthSec:18,weekSec:25,todaySec:22,memoryFreq:"off",birthdayIcons:true,holidayIcons:true,showWeather:true,showCountdown:true,weatherLocation:"Smiths Station, AL"};
 let settings={...defaults,...JSON.parse(localStorage.getItem("rfc-settings")||"{}")}, displayMonth=new Date(), current=0, rotations=0, timer, hourly;
