@@ -154,12 +154,12 @@ function theme(){
   ].join(" ");
 
   if(birthdayEvent){
-    document.body.style.setProperty("--month-theme-image",'url("theme-birthday.svg?v=18")');
+    document.body.style.setProperty("--month-theme-image",'url("theme-birthday.svg?v=19")');
     document.body.style.setProperty("--birthday-name",`"${birthdayEvent.title}"`);
   }else{
     document.body.style.setProperty(
       "--month-theme-image",
-      selected==="default"?"none":`url("theme-${selected}.svg?v=18")`
+      selected==="default"?"none":`url("theme-${selected}.jpg?v=19")`
     );
     document.body.style.removeProperty("--birthday-name");
   }
