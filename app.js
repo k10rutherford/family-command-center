@@ -34,7 +34,7 @@
   window.addEventListener("resize", sizeTvStage);
 })();
 const people={bailey:["bailey"],sophia:["sophia","soph"],cardin:["cardin"],gray:["gray","grayson"]};
-const defaults={autoTheme:true,manualTheme:"default",customBg:"",monthSec:18,weekSec:25,todaySec:22,memoryFreq:"off",birthdayIcons:true,holidayIcons:true,showWeather:true,showCountdown:true,weatherLocation:"Smiths Station, AL"};
+const defaults={autoTheme:true,manualTheme:"default",customBg:"",monthSec:18,weekSec:25,todaySec:22,memoryFreq:"off",birthdayIcons:true,holidayIcons:true,showWeather:true,showCountdown:true,countdownLabel:"",countdownDate:"",weatherLocation:"Smiths Station, AL"};
 let settings={...defaults,...JSON.parse(localStorage.getItem("rfc-settings")||"{}")}, displayMonth=new Date(), current=0, rotations=0, timer, hourly;
 displayMonth.setDate(1);
 const themes=["january","february","march","april","may","june","july","august","september","october","november","december"];
@@ -87,7 +87,22 @@ const clean=t=>{if(/^countdown\s*\|/i.test(t))return t.split("|").slice(1).join(
 const holiday=t=>{let l=t.toLowerCase();return holidayRules.find(r=>r.k.some(k=>l.includes(k)))};
 const ft=d=>new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:d.getMinutes()?"2-digit":undefined}).format(d);
 const fd=d=>new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(d);
-function theme(){document.body.className="";let t=settings.autoTheme?themes[new Date().getMonth()]:settings.manualTheme;document.body.classList.add("theme-"+t);document.body.style.setProperty("--art",(!settings.autoTheme&&settings.customBg)?`url("${settings.customBg}")`:"none");document.getElementById("themeIcon").textContent=getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"")}
+function theme(){
+  const preserved=[...document.body.classList].filter(c=>c==="fire-tv");
+  const selected=settings.autoTheme?themes[new Date().getMonth()]:settings.manualTheme;
+  document.body.className=[...preserved,`theme-${selected}`].join(" ");
+
+  if(!settings.autoTheme&&settings.customBg){
+    document.body.style.setProperty("--custom-art",`url("${settings.customBg}")`);
+    document.body.classList.add("has-custom-background");
+  }else{
+    document.body.style.removeProperty("--custom-art");
+    document.body.classList.remove("has-custom-background");
+  }
+
+  document.getElementById("themeIcon").textContent=
+    getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"");
+}
 function clocks(){let x=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date());["clock1","clock2","clock3"].forEach(id=>{
   const badge=liveCalendarConnected?'<span class="live-data-badge">● LIVE</span>':"";
   document.getElementById(id).innerHTML=x.replace(", ","<br>")+badge;
@@ -102,21 +117,79 @@ function renderWeather(){
   card.classList.toggle("hidden",!settings.showWeather);
   document.getElementById("weatherSub").textContent=`${settings.weatherLocation} · High 92° · Low 74° · Rain 20%`;
 }
+function getConfiguredCountdown(){
+  if(!settings.showCountdown||!settings.countdownDate)return null;
+  const target=new Date(`${settings.countdownDate}T00:00:00`);
+  if(Number.isNaN(target.valueOf()))return null;
+
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const days=Math.ceil((target-today)/86400000);
+  if(days<0)return null;
+
+  return{
+    title:(settings.countdownLabel||"Countdown").trim(),
+    date:target,
+    days
+  };
+}
+
 function renderCountdown(){
   const card=document.getElementById("countdownCard");
-  if(!settings.showCountdown){card.classList.add("hidden");return}
+  if(!settings.showCountdown){
+    card.classList.add("hidden");
+    return;
+  }
+
+  const configured=getConfiguredCountdown();
+  if(configured){
+    document.getElementById("countdownIcon").innerHTML=`<img src="countdown.svg?v=6" alt="">`;
+    document.getElementById("countdownTitle").textContent=configured.title;
+    document.getElementById("countdownDays").textContent=
+      configured.days===0?"Today":configured.days===1?"1 day":`${configured.days} days`;
+    card.classList.remove("hidden");
+    return;
+  }
+
   const today=new Date(Y,M,D);
-  const item=events.filter(e=>/^countdown\s*\|/i.test(e.title)&&e.start>=today).sort((a,b)=>a.start-b.start)[0];
-  if(!item){card.classList.add("hidden");return}
-  const days=Math.ceil((new Date(item.start.getFullYear(),item.start.getMonth(),item.start.getDate())-today)/86400000);
+  const item=events
+    .filter(e=>/^countdown\s*\|/i.test(e.title)&&e.start>=today)
+    .sort((a,b)=>a.start-b.start)[0];
+
+  if(!item){
+    card.classList.add("hidden");
+    return;
+  }
+
+  const days=Math.ceil(
+    (new Date(item.start.getFullYear(),item.start.getMonth(),item.start.getDate())-today)/86400000
+  );
   const title=clean(item.title);
-  const h=holiday(title);
   document.getElementById("countdownIcon").innerHTML=`<img src="countdown.svg?v=6" alt="">`;
   document.getElementById("countdownTitle").textContent=title;
-  document.getElementById("countdownDays").textContent=days===0?"Today":days===1?"1 day":`${days} days`;
+  document.getElementById("countdownDays").textContent=
+    days===0?"Today":days===1?"1 day":`${days} days`;
   card.classList.remove("hidden");
 }
-function renderWidgets(id){let c=document.getElementById(id),u=events.filter(e=>e.start>=new Date(Y,M,D)&&e.start<=new Date(Y,M,D+31)).sort((a,b)=>a.start-b.start),arr=[];const normal=u.find(e=>!/^countdown\s*\|/i.test(e.title));arr.push(["Up Next","upnext.svg?v=6",normal?.title||"Nothing scheduled",normal?`${fd(normal.start)} · ${ft(normal.start)}`:""]);widgets.forEach(([n,i,fn])=>{let e=u.find(x=>fn(x.title.toLowerCase()));if(e){let main=n=="Countdown"?clean(e.title):e.title;let sub=n=="Countdown"?`${Math.ceil((e.start-new Date(Y,M,D))/86400000)} days`:`${fd(e.start)} · ${ft(e.start)}`;arr.push([n,i,main,sub])}});c.innerHTML="";arr.slice(0,8).forEach(w=>c.innerHTML+=`
+function renderWidgets(id){let c=document.getElementById(id),u=events.filter(e=>e.start>=new Date(Y,M,D)&&e.start<=new Date(Y,M,D+31)).sort((a,b)=>a.start-b.start),arr=[];const normal=u.find(e=>!/^countdown\s*\|/i.test(e.title));arr.push(["Up Next","upnext.svg?v=6",normal?.title||"Nothing scheduled",normal?`${fd(normal.start)} · ${ft(normal.start)}`:""]);widgets.forEach(([n,i,fn])=>{
+  if(n==="Countdown"&&getConfiguredCountdown())return;
+  let e=u.find(x=>fn(x.title.toLowerCase()));
+  if(e){
+    let main=n=="Countdown"?clean(e.title):e.title;
+    let sub=n=="Countdown"?`${Math.ceil((e.start-new Date(Y,M,D))/86400000)} days`:`${fd(e.start)} · ${ft(e.start)}`;
+    arr.push([n,i,main,sub]);
+  }
+});
+const configuredCountdown=getConfiguredCountdown();
+if(configuredCountdown){
+  arr.push([
+    "Countdown",
+    "countdown.svg?v=6",
+    configuredCountdown.title,
+    configuredCountdown.days===0?"Today":configuredCountdown.days===1?"1 day":`${configuredCountdown.days} days`
+  ]);
+}
+c.innerHTML="";arr.slice(0,8).forEach(w=>c.innerHTML+=`
 <div class="widget">
   <div class="widget-icon-wrap"><img class="widget-icon-img" src="${w[1]}" alt=""></div>
   <div class="widget-text">
@@ -407,9 +480,72 @@ document.getElementById("refreshCalendarData").onclick=async()=>{
   await discoverCalendarsAndLoad();
 };
 
-const dialog=document.getElementById("settings");document.getElementById("settingsBtn").onclick=()=>{document.getElementById("autoTheme").checked=settings.autoTheme;document.getElementById("manualTheme").value=settings.manualTheme;document.getElementById("monthSec").value=settings.monthSec;document.getElementById("weekSec").value=settings.weekSec;document.getElementById("todaySec").value=settings.todaySec;document.getElementById("memoryFreq").value=settings.memoryFreq;document.getElementById("birthdayIcons").checked=settings.birthdayIcons;document.getElementById("holidayIcons").checked=settings.holidayIcons;document.getElementById("showWeather").checked=settings.showWeather;document.getElementById("showCountdown").checked=settings.showCountdown;document.getElementById("weatherLocation").value=settings.weatherLocation;dialog.showModal()};
+const dialog=document.getElementById("settings");
+
+function updateCountdownPreview(){
+  const preview=document.getElementById("countdownPreview");
+  const dateValue=document.getElementById("countdownDate").value;
+  const labelValue=document.getElementById("countdownLabel").value.trim()||"Countdown";
+
+  if(!dateValue){
+    preview.textContent="Select a date to calculate the number of days.";
+    return;
+  }
+
+  const target=new Date(`${dateValue}T00:00:00`);
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const days=Math.ceil((target-today)/86400000);
+
+  if(Number.isNaN(days)){
+    preview.textContent="Please select a valid date.";
+  }else if(days<0){
+    preview.textContent="That date has already passed.";
+  }else{
+    preview.textContent=`${labelValue}: ${days===0?"Today":days===1?"1 day":`${days} days`}`;
+  }
+}
+
+document.getElementById("settingsBtn").onclick=()=>{
+  document.getElementById("autoTheme").checked=settings.autoTheme;
+  document.getElementById("manualTheme").value=settings.manualTheme;
+  document.getElementById("monthSec").value=settings.monthSec;
+  document.getElementById("weekSec").value=settings.weekSec;
+  document.getElementById("todaySec").value=settings.todaySec;
+  document.getElementById("memoryFreq").value=settings.memoryFreq;
+  document.getElementById("birthdayIcons").checked=settings.birthdayIcons;
+  document.getElementById("holidayIcons").checked=settings.holidayIcons;
+  document.getElementById("showWeather").checked=settings.showWeather;
+  document.getElementById("showCountdown").checked=settings.showCountdown;
+  document.getElementById("countdownLabel").value=settings.countdownLabel||"";
+  document.getElementById("countdownDate").value=settings.countdownDate||"";
+  document.getElementById("weatherLocation").value=settings.weatherLocation;
+  updateCountdownPreview();
+  dialog.classList.toggle("tv-settings",document.body.classList.contains("fire-tv"));
+  dialog.showModal();
+};
 document.getElementById("customBg").onchange=e=>{let f=e.target.files[0];if(f){let r=new FileReader();r.onload=()=>settings.customBg=r.result;r.readAsDataURL(f)}};
-document.getElementById("saveBtn").onclick=()=>{settings.autoTheme=document.getElementById("autoTheme").checked;settings.manualTheme=document.getElementById("manualTheme").value;settings.monthSec=+document.getElementById("monthSec").value||18;settings.weekSec=+document.getElementById("weekSec").value||25;settings.todaySec=+document.getElementById("todaySec").value||22;settings.memoryFreq=document.getElementById("memoryFreq").value;settings.birthdayIcons=document.getElementById("birthdayIcons").checked;settings.holidayIcons=document.getElementById("holidayIcons").checked;settings.showWeather=document.getElementById("showWeather").checked;settings.showCountdown=document.getElementById("showCountdown").checked;settings.weatherLocation=document.getElementById("weatherLocation").value||"Smiths Station, AL";localStorage.setItem("rfc-settings",JSON.stringify(settings));render();setupHourly();schedule()};
+document.getElementById("countdownLabel").addEventListener("input",updateCountdownPreview);
+document.getElementById("countdownDate").addEventListener("change",updateCountdownPreview);
+document.getElementById("saveBtn").onclick=()=>{
+  settings.autoTheme=document.getElementById("autoTheme").checked;
+  settings.manualTheme=document.getElementById("manualTheme").value;
+  settings.monthSec=+document.getElementById("monthSec").value||18;
+  settings.weekSec=+document.getElementById("weekSec").value||25;
+  settings.todaySec=+document.getElementById("todaySec").value||22;
+  settings.memoryFreq=document.getElementById("memoryFreq").value;
+  settings.birthdayIcons=document.getElementById("birthdayIcons").checked;
+  settings.holidayIcons=document.getElementById("holidayIcons").checked;
+  settings.showWeather=document.getElementById("showWeather").checked;
+  settings.showCountdown=document.getElementById("showCountdown").checked;
+  settings.countdownLabel=document.getElementById("countdownLabel").value.trim();
+  settings.countdownDate=document.getElementById("countdownDate").value;
+  settings.weatherLocation=document.getElementById("weatherLocation").value||"Smiths Station, AL";
+  localStorage.setItem("rfc-settings",JSON.stringify(settings));
+  render();
+  setupHourly();
+  schedule();
+};
 document.getElementById("resetBtn").onclick=()=>{settings={...defaults};localStorage.setItem("rfc-settings",JSON.stringify(settings));render();schedule()};
 function setupHourly(){clearInterval(hourly);if(settings.memoryFreq=="hourly")hourly=setInterval(()=>{show(3);schedule()},3600000)}
 async function bootstrap(){

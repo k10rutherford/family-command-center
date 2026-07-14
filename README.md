@@ -1,14 +1,15 @@
-# The Rutherfords — Family Command Center v2.6 Final TV Sizing
+# The Rutherfords — Family Command Center v2.8
 
-This update keeps the successful full-screen Fire TV scale from v2.5 and enlarges only the requested elements:
+Fixes:
+- Settings dialog reduced further for Fire TV
+- Settings now fits within the visible viewport
+- Settings content scrolls inside the dialog
+- Monthly background layer moved inside the scaled dashboard
+- Slides and cards made slightly translucent so themes show through
+- July background made more visibly patriotic
+- Manual monthly background selection now uses the same working backdrop
+- Custom uploaded image uses the same working backdrop
+- Countdown settings from v2.7 remain included
 
-- “THE RUTHERFORDS”
-- “FAMILY COMMAND CENTER”
-- family legend and color dots
-- bottom widget icons
-- bottom widget labels, event names, and times
-
-Everything else remains at the same layout and scale.
-
-Use on Fire TV:
-https://k10rutherford.github.io/family-command-center/?v=13&tv=1
+Fire TV URL:
+https://k10rutherford.github.io/family-command-center/?v=15&tv=1
