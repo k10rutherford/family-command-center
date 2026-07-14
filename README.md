@@ -1,34 +1,32 @@
-# The Rutherfords — Family Command Center v2.9
+# The Rutherfords — Family Command Center v3.1
 
-Adds:
-- Smart keyword icons:
-  - Dentist / Ortho / Braces → tooth
-  - Doctor / Pediatrician → stethoscope
-  - School / First Day → schoolhouse
-  - Appointment / Appt → calendar
-  - Hair → scissors
-  - Nail → nail polish
-  - Vet → paw
-  - Anniversary → heart
-  - Party → party icon
-  - Award / Awards Day → trophy
-  - Church → church
-  - Graduation → cap
-  - Vacation / Trip → airplane
-- “Game” does not trigger a trophy
-- Whitney events are yellow
-- Whitney is not added to the legend
-- Family Status Bar on Today
-- New Right Now dashboard:
-  - Good Morning before noon
-  - Good Afternoon noon–6 PM
-  - Good Evening 6 PM–6 AM
-  - Today’s Weather
-  - Today’s Schedule
-  - Family Status
-  - Birthdays
-  - Countdown
-- Right Now is included in slideshow rotation
+Includes all Version 3.0 features:
+- 12 illustrated monthly themes
+- Settings up/down arrow controls
+- Gear at the bottom-right
+- Smart keyword icons
+- Whitney hidden yellow color
+- Right Now dashboard
+- Family Status Bar
+- Configurable countdown
+- Live Microsoft calendar
+
+New birthday-day theme:
+- Activates only on the actual birthday date
+- Recognizes Sophia, Grayson/Gray, Bailey, Cardin, Mommy/Mom, and Daddy/Dad
+- Requires the calendar event title to contain the person's name and the word “Birthday”
+- Overrides the normal monthly theme for that day only
+- Automatically returns to the normal monthly theme the next day
+- Displays balloons, confetti, party hats, and birthday cake artwork
+
+Examples that trigger it:
+- Sophia's Birthday
+- Grayson's Birthday
+- Gray Birthday
+- Bailey's Birthday
+- Cardin Birthday
+- Mommy's Birthday
+- Daddy Birthday
 
 Fire TV URL:
-https://k10rutherford.github.io/family-command-center/?v=16&tv=1
+https://k10rutherford.github.io/family-command-center/?v=18&tv=1

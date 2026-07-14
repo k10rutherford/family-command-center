@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs>
+  <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+  <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff9ec"/>
+    <stop offset="1" stop-color="#ffffff"/>
+  </linearGradient>
+</defs>
+<rect width="1920" height="1080" fill="url(#paper)"/>
+<g transform="translate(60 760) rotate(-8)"><rect x="0" y="0" width="70" height="260" rx="12" fill="#f6c755"/><polygon points="0,0 35,-65 70,0" fill="#ead0a4"/><polygon points="27,-48 35,-65 43,-48" fill="#333"/><rect x="0" y="210" width="70" height="50" fill="#ef8a74"/></g><g transform="translate(1580 780)"><rect x="0" y="110" width="250" height="70" rx="12" fill="#6aa9d8"/><rect x="20" y="45" width="230" height="70" rx="12" fill="#f0a6bf"/><rect x="50" y="0" width="210" height="55" rx="12" fill="#8dc175"/></g><path d="M1780 190 C1700 60 1550 120 1600 250 C1640 350 1780 315 1780 220 C1780 315 1920 350 1960 250 C2010 120 1860 60 1780 190Z" fill="#dc4f4f" opacity=".86"/><rect x="1770" y="95" width="20" height="65" rx="10" fill="#6b8b3d"/>
+</svg>

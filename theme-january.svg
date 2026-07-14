@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs>
+  <filter id="soft"><feGaussianBlur stdDeviation="1.2"/></filter>
+  <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#eff8ff"/>
+    <stop offset="1" stop-color="#ffffff"/>
+  </linearGradient>
+</defs>
+<rect width="1920" height="1080" fill="url(#paper)"/>
+<g stroke="#b8d7ee" stroke-width="5" stroke-linecap="round" opacity="0.9"><line x1="65.0" y1="110.0" x2="175.0" y2="110.0"/><line x1="92.5" y1="62.4" x2="147.5" y2="157.6"/><line x1="147.5" y1="62.4" x2="92.5" y2="157.6"/></g><g stroke="#b8d7ee" stroke-width="5" stroke-linecap="round" opacity="0.9"><line x1="1678.0" y1="130.0" x2="1762.0" y2="130.0"/><line x1="1699.0" y1="93.6" x2="1741.0" y2="166.4"/><line x1="1741.0" y1="93.6" x2="1699.0" y2="166.4"/></g><g stroke="#b8d7ee" stroke-width="5" stroke-linecap="round" opacity="0.9"><line x1="236.0" y1="280.0" x2="284.0" y2="280.0"/><line x1="248.0" y1="259.2" x2="272.0" y2="300.8"/><line x1="272.0" y1="259.2" x2="248.0" y2="300.8"/></g><g opacity=".9"><path d="M30 970 L180 650 L330 970Z" fill="#6aa0c8"/><path d="M85 970 L180 760 L275 970Z" fill="#eef7fd"/><path d="M1590 1020 L1745 700 L1900 1020Z" fill="#6aa0c8"/><path d="M1650 1020 L1745 800 L1840 1020Z" fill="#eef7fd"/></g><path d="M0 1010 Q320 940 640 1010 T1280 1010 T1920 1010 V1080 H0Z" fill="#dcecf7"/>
+</svg>

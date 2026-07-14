@@ -1477,3 +1477,162 @@ body.has-custom-background #themeBackdrop {
 .fire-tv .right-now-schedule-item strong{
   font-size:19px!important;
 }
+
+
+/* =========================================================
+   Version 3.0 — Illustrated monthly themes + TV controls
+   ========================================================= */
+
+/* Use the original illustrated edge-scene approach. */
+#themeBackdrop {
+  background-image:
+    linear-gradient(rgba(255,255,255,.28), rgba(255,255,255,.28)),
+    var(--month-theme-image, none),
+    linear-gradient(var(--bg), var(--bg)) !important;
+  background-size: cover, cover, cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+body.has-custom-background #themeBackdrop {
+  background-image:
+    linear-gradient(rgba(255,255,255,.42), rgba(255,255,255,.42)),
+    var(--custom-art),
+    linear-gradient(var(--bg), var(--bg)) !important;
+}
+
+/* Keep calendar readable while allowing decorative edges to show. */
+.slide {
+  background: rgba(255,255,255,.40) !important;
+}
+.month-grid,
+.week-grid,
+.today-main,
+.today-side,
+.right-now-card {
+  background: rgba(255,255,255,.76) !important;
+}
+.day,
+.week-col,
+.date-card,
+.info-card,
+.widget {
+  background-color: rgba(255,255,255,.82) !important;
+}
+
+/* Settings scroll buttons for Fire TV remote/touch. */
+dialog#settings {
+  position: relative !important;
+}
+
+.settings-scroll {
+  position: absolute;
+  right: 12px;
+  z-index: 30;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid #d8d1c8;
+  background: rgba(255,255,255,.96);
+  color: #3d3940;
+  font-size: 22px !important;
+  font-weight: 900;
+  box-shadow: 0 5px 18px rgba(50,40,45,.18);
+  cursor: pointer;
+}
+
+.settings-scroll-up {
+  top: 68px;
+}
+
+.settings-scroll-down {
+  bottom: 68px;
+}
+
+.settings-scroll:disabled {
+  opacity: .28;
+  cursor: default;
+}
+
+/* Put the gear back in the bottom-right corner of the scaled dashboard. */
+.settings-btn {
+  position: absolute !important;
+  right: 22px !important;
+  bottom: 22px !important;
+  z-index: 40 !important;
+}
+
+.fire-tv .settings-btn {
+  position: absolute !important;
+  right: 26px !important;
+  bottom: 24px !important;
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 24px !important;
+}
+
+/* Make the illustrated themes clearly visible on the TV. */
+.fire-tv #themeBackdrop {
+  background-image:
+    linear-gradient(rgba(255,255,255,.18), rgba(255,255,255,.18)),
+    var(--month-theme-image, none),
+    linear-gradient(var(--bg), var(--bg)) !important;
+}
+
+.fire-tv .slide {
+  background: rgba(255,255,255,.30) !important;
+}
+
+.fire-tv .month-grid,
+.fire-tv .week-grid,
+.fire-tv .today-main,
+.fire-tv .today-side,
+.fire-tv .right-now-card {
+  background: rgba(255,255,255,.72) !important;
+}
+
+@media (max-width: 700px) {
+  .settings-scroll {
+    width: 42px;
+    height: 42px;
+    right: 8px;
+  }
+}
+
+
+/* =========================================================
+   Version 3.1 — Birthday-only daily theme
+   ========================================================= */
+
+.theme-birthday-day #themeBackdrop {
+  background-image:
+    linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,.14)),
+    url("theme-birthday.svg?v=18"),
+    linear-gradient(var(--bg),var(--bg)) !important;
+  background-size:cover,cover,cover!important;
+  background-position:center!important;
+}
+
+.theme-birthday-day .slide {
+  background:rgba(255,255,255,.25)!important;
+}
+
+.theme-birthday-day .month-grid,
+.theme-birthday-day .week-grid,
+.theme-birthday-day .today-main,
+.theme-birthday-day .today-side,
+.theme-birthday-day .right-now-card {
+  background:rgba(255,255,255,.70)!important;
+}
+
+.theme-birthday-day .brand-lockup p,
+.theme-birthday-day .right-now-greeting {
+  color:#f05f98!important;
+}
+
+.theme-birthday-day #monthTitle::after {
+  content:"  🎂";
+  font-family:Arial,sans-serif;
+  font-size:.58em;
+  vertical-align:middle;
+}

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>The Rutherfords | Family Command Center</title>
-  <link rel="stylesheet" href="styles.css?v=16">
+  <link rel="stylesheet" href="styles.css?v=18">
 </head>
 <body>
   <div id="app">
@@ -175,6 +175,8 @@
   <dialog id="settings">
     <form method="dialog">
       <div class="dialog-head"><h2>Dashboard Settings</h2><button value="cancel">×</button></div>
+      <button type="button" id="settingsScrollUp" class="settings-scroll settings-scroll-up" aria-label="Scroll settings up">▲</button>
+      <button type="button" id="settingsScrollDown" class="settings-scroll settings-scroll-down" aria-label="Scroll settings down">▼</button>
 
       
       <section class="settings-section microsoft-section">
@@ -268,11 +270,11 @@
       <label>Weather location <input id="weatherLocation" type="text" placeholder="Smiths Station, AL"></label>
 
       <div class="actions"><button id="resetBtn" type="button">Reset</button><button id="saveBtn" value="save">Save & Close</button></div>
-      <p class="version">Version 2.9 · Right Now & Smart Icons</p>
+      <p class="version">Version 3.1 · Birthday Day Theme</p>
     </form>
   </dialog>
 
-  <script src="msal-browser.min.js?v=16"></script>
-  <script src="app.js?v=16"></script>
+  <script src="msal-browser.min.js?v=18"></script>
+  <script src="app.js?v=18"></script>
 </body>
 </html>

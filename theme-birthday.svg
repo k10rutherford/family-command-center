@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs>
+  <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff7fb"/>
+    <stop offset="1" stop-color="#fffdf7"/>
+  </linearGradient>
+</defs>
+<rect width="1920" height="1080" fill="url(#paper)"/>
+
+<!-- confetti -->
+<g opacity=".78" stroke-linecap="round" stroke-width="8">
+  <path d="M90 130 l30 18" stroke="#f49fcc"/><path d="M180 90 l-8 35" stroke="#95c643"/>
+  <path d="M300 150 l28 -12" stroke="#55c7f6"/><path d="M410 90 l18 28" stroke="#e2a9f1"/>
+  <path d="M1510 110 l28 15" stroke="#f5d766"/><path d="M1630 145 l-8 34" stroke="#f49fcc"/>
+  <path d="M1740 88 l28 20" stroke="#55c7f6"/><path d="M1830 155 l20 -25" stroke="#95c643"/>
+  <path d="M110 900 l25 18" stroke="#e2a9f1"/><path d="M240 960 l-12 32" stroke="#f5d766"/>
+  <path d="M1660 930 l32 -10" stroke="#95c643"/><path d="M1800 900 l18 30" stroke="#f49fcc"/>
+</g>
+
+<!-- balloons left -->
+<g opacity=".88">
+  <ellipse cx="120" cy="250" rx="58" ry="76" fill="#f49fcc"/>
+  <ellipse cx="230" cy="205" rx="58" ry="76" fill="#55c7f6"/>
+  <ellipse cx="320" cy="285" rx="58" ry="76" fill="#95c643"/>
+  <path d="M120 326 C100 430 145 500 110 610" fill="none" stroke="#9b8f91" stroke-width="4"/>
+  <path d="M230 281 C250 400 205 495 245 610" fill="none" stroke="#9b8f91" stroke-width="4"/>
+  <path d="M320 361 C300 450 350 520 315 630" fill="none" stroke="#9b8f91" stroke-width="4"/>
+</g>
+
+<!-- balloons right -->
+<g opacity=".88">
+  <ellipse cx="1600" cy="250" rx="58" ry="76" fill="#e2a9f1"/>
+  <ellipse cx="1710" cy="205" rx="58" ry="76" fill="#f5d766"/>
+  <ellipse cx="1810" cy="285" rx="58" ry="76" fill="#f49fcc"/>
+  <path d="M1600 326 C1580 430 1625 500 1590 610" fill="none" stroke="#9b8f91" stroke-width="4"/>
+  <path d="M1710 281 C1730 400 1685 495 1725 610" fill="none" stroke="#9b8f91" stroke-width="4"/>
+  <path d="M1810 361 C1790 450 1840 520 1805 630" fill="none" stroke="#9b8f91" stroke-width="4"/>
+</g>
+
+<!-- cake at bottom center -->
+<g transform="translate(760 805)">
+  <rect x="0" y="120" width="400" height="105" rx="22" fill="#f6b8cd"/>
+  <rect x="55" y="45" width="290" height="95" rx="20" fill="#fff0b8"/>
+  <path d="M0 145 Q50 105 100 145 T200 145 T300 145 T400 145" fill="none" stroke="#fff" stroke-width="18"/>
+  <path d="M55 72 Q95 35 135 72 T215 72 T295 72 T345 72" fill="none" stroke="#fff" stroke-width="16"/>
+  <g>
+    <rect x="105" y="-15" width="14" height="65" rx="7" fill="#55c7f6"/>
+    <rect x="193" y="-15" width="14" height="65" rx="7" fill="#f49fcc"/>
+    <rect x="281" y="-15" width="14" height="65" rx="7" fill="#95c643"/>
+    <path d="M112 -18 C92 -42 132 -48 112 -74 C148 -47 130 -30 112 -18Z" fill="#f5b940"/>
+    <path d="M200 -18 C180 -42 220 -48 200 -74 C236 -47 218 -30 200 -18Z" fill="#f5b940"/>
+    <path d="M288 -18 C268 -42 308 -48 288 -74 C324 -47 306 -30 288 -18Z" fill="#f5b940"/>
+  </g>
+</g>
+
+<!-- corner party hats -->
+<g transform="translate(80 760) rotate(-15)">
+  <path d="M0 170 L95 0 L160 185Z" fill="#e2a9f1"/>
+  <circle cx="95" cy="-2" r="22" fill="#f5d766"/>
+  <circle cx="40" cy="120" r="12" fill="#fff"/><circle cx="105" cy="80" r="12" fill="#fff"/>
+</g>
+<g transform="translate(1690 760) rotate(15)">
+  <path d="M0 185 L65 0 L160 170Z" fill="#55c7f6"/>
+  <circle cx="65" cy="-2" r="22" fill="#f49fcc"/>
+  <circle cx="55" cy="80" r="12" fill="#fff"/><circle cx="120" cy="120" r="12" fill="#fff"/>
+</g>
+</svg>

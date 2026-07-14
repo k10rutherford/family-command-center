@@ -124,12 +124,47 @@ const smartIcon=t=>{
 };
 const ft=d=>new Intl.DateTimeFormat("en-US",{hour:"numeric",minute:d.getMinutes()?"2-digit":undefined}).format(d);
 const fd=d=>new Intl.DateTimeFormat("en-US",{month:"short",day:"numeric"}).format(d);
+
+const birthdayThemeNames=[
+  ["sophia",["sophia"]],
+  ["grayson",["grayson","gray"]],
+  ["bailey",["bailey"]],
+  ["cardin",["cardin"]],
+  ["mommy",["mommy","mom"]],
+  ["daddy",["daddy","dad"]]
+];
+
+function birthdayPersonToday(date=new Date()){
+  return events.find(event=>{
+    if(!same(event.start,date))return false;
+    const title=event.title.toLowerCase();
+    if(!title.includes("birthday"))return false;
+    return birthdayThemeNames.some(([,aliases])=>aliases.some(name=>title.includes(name)));
+  })||null;
+}
+
 function theme(){
   const preserved=[...document.body.classList].filter(c=>c==="fire-tv");
+  const birthdayEvent=birthdayPersonToday();
   const selected=settings.autoTheme?themes[new Date().getMonth()]:settings.manualTheme;
-  document.body.className=[...preserved,`theme-${selected}`].join(" ");
 
-  if(!settings.autoTheme&&settings.customBg){
+  document.body.className=[
+    ...preserved,
+    birthdayEvent?"theme-birthday-day":`theme-${selected}`
+  ].join(" ");
+
+  if(birthdayEvent){
+    document.body.style.setProperty("--month-theme-image",'url("theme-birthday.svg?v=18")');
+    document.body.style.setProperty("--birthday-name",`"${birthdayEvent.title}"`);
+  }else{
+    document.body.style.setProperty(
+      "--month-theme-image",
+      selected==="default"?"none":`url("theme-${selected}.svg?v=18")`
+    );
+    document.body.style.removeProperty("--birthday-name");
+  }
+
+  if(!birthdayEvent&&!settings.autoTheme&&settings.customBg){
     document.body.style.setProperty("--custom-art",`url("${settings.customBg}")`);
     document.body.classList.add("has-custom-background");
   }else{
@@ -138,7 +173,7 @@ function theme(){
   }
 
   document.getElementById("themeIcon").textContent=
-    getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"");
+    birthdayEvent?"🎂":getComputedStyle(document.body).getPropertyValue("--icon").replaceAll('"',"");
 }
 function clocks(){let x=new Intl.DateTimeFormat("en-US",{weekday:"long",month:"long",day:"numeric",hour:"numeric",minute:"2-digit"}).format(new Date());["clock1","clock2","clock3","clock4"].forEach(id=>{
   const badge=liveCalendarConnected?'<span class="live-data-badge">● LIVE</span>':"";
@@ -635,6 +670,18 @@ document.getElementById("refreshCalendarData").onclick=async()=>{
 };
 
 const dialog=document.getElementById("settings");
+const settingsForm=dialog.querySelector("form");
+const scrollSettings=amount=>settingsForm.scrollBy({top:amount,behavior:"smooth"});
+document.getElementById("settingsScrollUp").onclick=()=>scrollSettings(-360);
+document.getElementById("settingsScrollDown").onclick=()=>scrollSettings(360);
+function updateSettingsArrows(){
+  const up=document.getElementById("settingsScrollUp");
+  const down=document.getElementById("settingsScrollDown");
+  up.disabled=settingsForm.scrollTop<=4;
+  down.disabled=settingsForm.scrollTop+settingsForm.clientHeight>=settingsForm.scrollHeight-4;
+}
+settingsForm.addEventListener("scroll",updateSettingsArrows);
+
 
 function updateCountdownPreview(){
   const preview=document.getElementById("countdownPreview");
@@ -677,6 +724,7 @@ document.getElementById("settingsBtn").onclick=()=>{
   updateCountdownPreview();
   dialog.classList.toggle("tv-settings",document.body.classList.contains("fire-tv"));
   dialog.showModal();
+  requestAnimationFrame(updateSettingsArrows);
 };
 document.getElementById("customBg").onchange=e=>{let f=e.target.files[0];if(f){let r=new FileReader();r.onload=()=>settings.customBg=r.result;r.readAsDataURL(f)}};
 document.getElementById("countdownLabel").addEventListener("input",updateCountdownPreview);
@@ -708,6 +756,7 @@ async function bootstrap(){
   schedule();
   setupHourly();
   setInterval(clocks,30000);
+  setInterval(()=>{theme();renderMonth();renderWeek();renderToday();renderRightNow();},15*60*1000);
   await initializeMicrosoft();
 }
 bootstrap().catch(error=>{
